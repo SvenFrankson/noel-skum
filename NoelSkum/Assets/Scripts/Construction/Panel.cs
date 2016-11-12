@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Panel : GridItem
+public class Panel : GridCell
 {
 
     private byte reference;

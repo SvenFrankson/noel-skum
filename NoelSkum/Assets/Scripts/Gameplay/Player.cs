@@ -31,10 +31,24 @@ public class Player : MonoBehaviour
     }
     public Panel panelPreview;
     public GameObject panelPreviewInstance;
+    public int itemPreviewRot;
+    public Item itemPreview;
 
     public void Start()
     {
         this.panelPreview = new Panel(-1, -1, -1, 0);
+        this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, new byte[] { 0, 0, 0, 0 });
+    }
+
+    public void OnGUI()
+    {
+        GUILayout.BeginArea(Rect.MinMaxRect(0.05f * Screen.width, 0.05f * Screen.height, 0.2f * Screen.width, 0.3f * Screen.height));
+        if (GUILayout.Button("Save"))
+        {
+            NoelSkumGame.Instance.Save();
+        }
+        GUILayout.TextField("ItemPreviewRotation = " + this.itemPreviewRot);
+        GUILayout.EndArea();
     }
 
     void Update()
@@ -56,6 +70,11 @@ public class Player : MonoBehaviour
             this.C_Rigidbody.MovePosition(this.transform.position + 5f * Time.deltaTime * this.transform.right);
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            this.itemPreviewRot = (this.itemPreviewRot + 1) % 4;
+        }
+
         if (Input.GetMouseButton(1))
         {
             this.transform.rotation = Quaternion.AngleAxis(-5f * Input.GetAxis("Mouse X"), this.transform.up) * this.transform.rotation;
@@ -63,9 +82,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            this.PutPanelAtMouse();
+            this.PutItemAtMouse();
         }
-        UpdatePreviewPanel();
+        //UpdatePreviewPanel();
+        UpdatePreviewItem();
     }
 
     public void FixedUpdate()
@@ -80,7 +100,7 @@ public class Player : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 4f))
         {
             if (hit.collider.GetComponent<PanelInstance>() != null)
             {
@@ -90,7 +110,7 @@ public class Player : MonoBehaviour
                 Debug.Log("WorldPosToPanelPos");
                 Debug.Log("WorldPos = " + worldPos);
                 Debug.Log("IPos = " + iPos + ". JPos = " + jPos + ". KPos = " + kPos);
-                Grid.Instance.AddPanel(iPos, jPos, kPos, 1);
+                NoelSkumGame.Instance.AddPanel(iPos, jPos, kPos, 1);
             }
         }
     }
@@ -99,7 +119,7 @@ public class Player : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 4f))
         {
             if (hit.collider.GetComponent<PanelInstance>() != null)
             {
@@ -132,5 +152,34 @@ public class Player : MonoBehaviour
         {
             this.panelPreviewInstance.gameObject.SetActive(false);
         }
+    }
+
+    public void PutItemAtMouse()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 4f))
+        {
+            Vector3 worldPos = hit.point + hit.normal * 0.5f;
+            int iPos, jPos, kPos;
+            Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
+            NoelSkumGame.Instance.AddItem(iPos, jPos, kPos, this.itemPreviewRot, new byte[] { 0, 0, 0, 0 });
+        }
+    }
+
+    public void UpdatePreviewItem()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 4f))
+        {
+            Vector3 worldPos = hit.point + hit.normal * 0.5f;
+            int iPos, jPos, kPos;
+            Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
+            itemPreview.UpdateItem(iPos, jPos, kPos, this.itemPreviewRot);
+            this.itemPreview.gameObject.SetActive(true);
+            return;
+        }
+        this.itemPreview.gameObject.SetActive(false);
     }
 }

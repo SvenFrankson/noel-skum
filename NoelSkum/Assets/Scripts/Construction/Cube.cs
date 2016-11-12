@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Cube : GridItem {
+public class Cube : GridCell {
 
     public Cube(int iPos, int jPos, int kPos) 
         : base(iPos, jPos, kPos)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class GridItem
+public abstract class GridCell
 {
 
     protected int iPos;
@@ -16,7 +16,7 @@ public abstract class GridItem
         }
     }
 
-    protected GridItem(int iPos, int jPos, int kPos)
+    protected GridCell(int iPos, int jPos, int kPos)
     {
         this.iPos = iPos;
         this.jPos = jPos;
