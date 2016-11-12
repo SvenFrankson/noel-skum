@@ -37,7 +37,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    public GameMode gameMode;
+    private GameMode gMode;
+    private GameMode GMode
+    {
+        get
+        {
+            return this.gMode;
+        }
+        set {
+            this.HidePreviewPanel();
+            this.HidePreviewItem();
+            this.gMode = value;
+        }
+    }
     public Panel panelPreview;
     public GameObject panelPreviewInstance;
     public int itemPreviewRot;
@@ -45,9 +57,10 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        this.gameMode = GameMode.Normal;
         this.panelPreview = new Panel(-1, -1, -1, 0);
         this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, new byte[] { 0, 0, 0, 0 });
+        Destroy(itemPreview.GetComponent<Collider>());
+        this.GMode = GameMode.Normal;
     }
 
     public void OnGUI()
@@ -57,6 +70,19 @@ public class Player : MonoBehaviour
         {
             NoelSkumGame.Instance.Save();
         }
+        if (GUILayout.Button("GameMode Normal"))
+        {
+            this.GMode = GameMode.Normal;
+        }
+        if (GUILayout.Button("GameMode SetPanel"))
+        {
+            this.GMode = GameMode.SetPanel;
+        }
+        if (GUILayout.Button("GameMode SetItem"))
+        {
+            this.GMode = GameMode.SetItem;
+        }
+        GUILayout.TextField("Current GameMode : " + GMode.ToString());
         GUILayout.TextField("ItemPreviewRotation = " + this.itemPreviewRot);
         GUILayout.EndArea();
     }
@@ -92,14 +118,21 @@ public class Player : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            this.PutItemAtMouse();
+            if (this.GMode == GameMode.SetPanel)
+            {
+                PutPanelAtMouse();
+            }
+            if (this.GMode == GameMode.SetItem)
+            {
+                PutItemAtMouse();
+            }
         }
 
-        if (this.gameMode == GameMode.SetPanel)
+        if (this.GMode == GameMode.SetPanel)
         {
             UpdatePreviewPanel();
         }
-        if (this.gameMode == GameMode.SetItem)
+        if (this.GMode == GameMode.SetItem)
         {
             UpdatePreviewItem();
         }
