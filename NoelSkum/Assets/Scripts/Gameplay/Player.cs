@@ -2,6 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum GameMode
+{
+    Normal,
+    SetPanel,
+    SetItem
+}
+
 public class Player : MonoBehaviour
 {
 
@@ -29,6 +36,8 @@ public class Player : MonoBehaviour
             return c_Rigidbody;
         }
     }
+
+    public GameMode gameMode;
     public Panel panelPreview;
     public GameObject panelPreviewInstance;
     public int itemPreviewRot;
@@ -36,6 +45,7 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
+        this.gameMode = GameMode.Normal;
         this.panelPreview = new Panel(-1, -1, -1, 0);
         this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, new byte[] { 0, 0, 0, 0 });
     }
@@ -84,8 +94,15 @@ public class Player : MonoBehaviour
         {
             this.PutItemAtMouse();
         }
-        //UpdatePreviewPanel();
-        UpdatePreviewItem();
+
+        if (this.gameMode == GameMode.SetPanel)
+        {
+            UpdatePreviewPanel();
+        }
+        if (this.gameMode == GameMode.SetItem)
+        {
+            UpdatePreviewItem();
+        }
     }
 
     public void FixedUpdate()
@@ -180,6 +197,11 @@ public class Player : MonoBehaviour
             this.itemPreview.gameObject.SetActive(true);
             return;
         }
+        this.HidePreviewItem();
+    }
+
+    public void HidePreviewItem()
+    {
         this.itemPreview.gameObject.SetActive(false);
     }
 }
