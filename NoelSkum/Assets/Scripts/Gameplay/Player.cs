@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("Item Menu Option Hit");
                 hit.collider.GetComponent<ItemMenuOption>().Activate();
+                this.ItemMenuInstance.HideItemMenu();
             }
         }
         else if (Physics.Raycast(ray, out hit, 8f))
