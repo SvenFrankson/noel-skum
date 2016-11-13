@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class GridCell : NoelSkumObject
+public abstract class GridCell : Object
 {    
     protected byte[] GetPosSave()
     {

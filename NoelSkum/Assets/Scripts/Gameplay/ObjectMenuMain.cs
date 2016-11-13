@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemMenuMain : ItemMenu
+public class ObjectMenuMain : ObjectMenu
 {
-    public static ItemMenuMain instance;
-    public static ItemMenuMain Instance
+    public static ObjectMenuMain instance;
+    public static ObjectMenuMain Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<ItemMenuMain>();
+                instance = FindObjectOfType<ObjectMenuMain>();
             }
             return instance;
         }
@@ -18,7 +18,7 @@ public class ItemMenuMain : ItemMenu
 
     public override void InheritedUpdate()
     {
-        if (Player.Instance.GMode == GameMode.ItemMenuMain)
+        if (Player.Instance.GMode == GameMode.ObjectMenuMain)
         {
             if (!this.Show)
             {
@@ -35,24 +35,21 @@ public class ItemMenuMain : ItemMenu
         this.transform.LookAt(Player.Instance.Head, Vector3.up);
     }
 
-    public override void Rebuild(Item target)
+    public override void Rebuild(Object target)
     {
         base.Rebuild(target);
 
-        foreach (ItemMenuOption option in Options)
+        foreach (ObjectMenuOption option in Options.Values)
         {
             option.Unset();
         }
-        foreach (ItemMenuOption option in Options)
+        if (Target.MenuOptions.Contains(ObjectMenuOptionType.PickUp))
         {
-            if (option.OptionType == ItemMenuOptionType.PickUp)
-            {
-                option.SetUp(this.Target.PickUp);
-            }
-            else if (option.OptionType == ItemMenuOptionType.Move)
-            {
-                option.SetUp(this.SwitchToItemMenuMove);
-            }
+            this.Options[ObjectMenuOptionType.PickUp].SetUp(this.Target.PickUp);
+        }
+        else if (Target.MenuOptions.Contains(ObjectMenuOptionType.Move))
+        {
+            this.Options[ObjectMenuOptionType.PickUp].SetUp(this.SwitchToItemMenuMove);
         }
     }
 

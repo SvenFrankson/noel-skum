@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-public class Item : NoelSkumObject {
+public class Item : Object {
 
     private byte[] reference;
     public int rot;
@@ -85,11 +85,7 @@ public class Item : NoelSkumObject {
     }
 
     // Currently destroys the item as there is no inventory mecanism.
-    public void PickUp()
-    {
-        NoelSkumGame.Instance.DestroyItem(this);
-        Player.Instance.GMode = GameMode.Normal;
-    }
+    
 
     public override byte[] GetSave()
     {

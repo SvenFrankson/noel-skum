@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public enum GameMode
 {
     Normal,
-    ItemMenuMain,
+    ObjectMenuMain,
     ItemMenuMove,
     SetPanel,
     SetItem
@@ -135,11 +135,11 @@ public class Player : MonoBehaviour
         {
             if (this.GMode == GameMode.Normal)
             {
-                SelectItem();
+                SelectObject();
             }
-            else if (this.GMode == GameMode.ItemMenuMain)
+            else if (this.GMode == GameMode.ObjectMenuMain)
             {
-                SelectItemMenuOption();
+                SelectObjectMenuOption();
             }
             else if (this.GMode == GameMode.ItemMenuMove)
             {
@@ -173,29 +173,29 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SelectItem()
+    public void SelectObject()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 8f))
         {
-            if (hit.collider.GetComponent<Item>() != null)
+            if (hit.collider.GetComponent<Object>() != null)
             {
-                GMode = GameMode.ItemMenuMain;
-                ItemMenuMain.Instance.Rebuild(hit.collider.GetComponent<Item>());
+                GMode = GameMode.ObjectMenuMain;
+                ObjectMenuMain.Instance.Rebuild(hit.collider.GetComponent<Object>());
             }
         }
     }
 
-    public void SelectItemMenuOption()
+    public void SelectObjectMenuOption()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 8f, this.itemMenuOptionLayerMask))
         {
-            if (hit.collider.GetComponent<ItemMenuOption>() != null)
+            if (hit.collider.GetComponent<ObjectMenuOption>() != null)
             {
-                hit.collider.GetComponent<ItemMenuOption>().Activate();
+                hit.collider.GetComponent<ObjectMenuOption>().Activate();
                 return;
             }
         }
@@ -208,9 +208,9 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 8f, this.itemMenuOptionLayerMask))
         {
-            if (hit.collider.GetComponent<ItemMenuOption>() != null)
+            if (hit.collider.GetComponent<ObjectMenuOption>() != null)
             {
-                hit.collider.GetComponent<ItemMenuOption>().Activate();
+                hit.collider.GetComponent<ObjectMenuOption>().Activate();
                 return;
             }
         }

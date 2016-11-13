@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public enum ItemMenuOptionType
+public enum ObjectMenuOptionType
 {
     PickUp,
     Move,
@@ -14,9 +14,9 @@ public enum ItemMenuOptionType
     MoveBack
 }
 
-public class ItemMenuOption : MonoBehaviour {
+public class ObjectMenuOption : MonoBehaviour {
 
-    public ItemMenuOptionType OptionType;
+    public ObjectMenuOptionType OptionType;
     public Action OnActivation;
 
     public void SetUp(Action onActivation)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemMenuMove : ItemMenu {
+public class ItemMenuMove : ObjectMenu {
 
     public static ItemMenuMove instance;
     public static ItemMenuMove Instance
@@ -38,35 +38,14 @@ public class ItemMenuMove : ItemMenu {
         }
     }
 
-    public override void Rebuild(Item target)
+    public override void Rebuild(Object target)
     {
         base.Rebuild(target);
-        foreach (ItemMenuOption option in Options)
-        {
-            if (option.OptionType == ItemMenuOptionType.MoveRight)
-            {
-                option.SetUp(this.Target.MoveRight);
-            }
-            else if (option.OptionType == ItemMenuOptionType.MoveUp)
-            {
-                option.SetUp(this.Target.MoveUp);
-            }
-            else if (option.OptionType == ItemMenuOptionType.MoveForward)
-            {
-                option.SetUp(this.Target.MoveForward);
-            }
-            else if (option.OptionType == ItemMenuOptionType.MoveLeft)
-            {
-                option.SetUp(this.Target.MoveLeft);
-            }
-            else if (option.OptionType == ItemMenuOptionType.MoveDown)
-            {
-                option.SetUp(this.Target.MoveDown);
-            }
-            else if (option.OptionType == ItemMenuOptionType.MoveBack)
-            {
-                option.SetUp(this.Target.MoveBack);
-            }
-        }
+        this.Options[ObjectMenuOptionType.MoveRight].SetUp(((Item)this.Target).MoveRight);
+        this.Options[ObjectMenuOptionType.MoveUp].SetUp(((Item)this.Target).MoveUp);
+        this.Options[ObjectMenuOptionType.MoveForward].SetUp(((Item)this.Target).MoveForward);
+        this.Options[ObjectMenuOptionType.MoveLeft].SetUp(((Item)this.Target).MoveLeft);
+        this.Options[ObjectMenuOptionType.MoveDown].SetUp(((Item)this.Target).MoveDown);
+        this.Options[ObjectMenuOptionType.MoveBack].SetUp(((Item)this.Target).MoveBack);
     }
 }

@@ -83,10 +83,17 @@ public class NoelSkumGame : MonoBehaviour {
         this.items.Add(item);
     }
 
-    public void DestroyItem(Item item)
+    public void DestroyObject(Object target)
     {
-        this.items.Remove(item);
-        Destroy(item.gameObject);
+        if (target.GetType() == typeof(GridCell))
+        {
+            this.gridcells[target.iPos][target.jPos][target.kPos] = null;
+        }
+        else if (target.GetType() == typeof(Item))
+        {
+            this.items.Remove((Item)target);
+        }
+        Destroy(target.gameObject);
     }
 
     public byte[] GetSave()
