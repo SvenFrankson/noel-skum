@@ -5,7 +5,13 @@ using System;
 public enum ItemMenuOptionType
 {
     PickUp,
-    Move
+    Move,
+    MoveRight,
+    MoveUp,
+    MoveForward,
+    MoveLeft,
+    MoveDown,
+    MoveBack
 }
 
 public class ItemMenuOption : MonoBehaviour {
@@ -20,7 +26,7 @@ public class ItemMenuOption : MonoBehaviour {
 
     public void Unset()
     {
-        Debug.Log("Unset this");
+        
     }
 
     public void Activate()

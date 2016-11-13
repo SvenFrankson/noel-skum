@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\Construction\Panel.cs" />
     <Compile Include="Assets\Scripts\Construction\PanelInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenu.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ItemMenuMain.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ItemMenuMove.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenuOption.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Player.cs" />
   </ItemGroup>

@@ -3,48 +3,47 @@ using System.Collections;
 
 public class ItemMenu : MonoBehaviour {
 
-    public static ItemMenu instance;
-    public static ItemMenu Instance
+    protected Item Target;
+    public ItemMenuOption[] Options;
+    protected bool Show;
+
+    public void Start()
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<ItemMenu>();
-            }
-            return instance;
-        }
+        this.HideItemMenu();
     }
 
-    private Item Target;
+    public void Update()
+    {
+        this.InheritedUpdate();
+    }
 
-    public ItemMenuOption[] Options;
+    public virtual void InheritedUpdate()
+    {
 
-    
-	void Update () {
-        this.transform.LookAt(Player.Instance.Head, Vector3.up);
-	}
+    }
 
-    public void Rebuild(Item target)
+    public virtual void Rebuild(Item target)
     {
         this.Target = target;
-        this.gameObject.SetActive(true);
         this.transform.position = this.Target.Position;
-        foreach (ItemMenuOption option in Options)
+    }
+
+    public void ShowItemMenu()
+    {
+        Debug.Log("ShowItemMenu");
+        foreach (ItemMenuOption option in this.Options)
         {
-            option.Unset();
+            option.gameObject.SetActive(true);
         }
-        foreach (ItemMenuOption option in Options)
-        {
-            if (option.OptionType == ItemMenuOptionType.PickUp)
-            {
-                option.SetUp(this.Target.PickUp);
-            }
-        }
+        this.Show = true;
     }
 
     public void HideItemMenu()
     {
-        this.gameObject.SetActive(false);
+        foreach (ItemMenuOption option in this.Options)
+        {
+            option.gameObject.SetActive(false);
+        }
+        this.Show = false;
     }
 }

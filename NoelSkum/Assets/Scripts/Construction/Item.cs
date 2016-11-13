@@ -60,10 +60,46 @@ public class Item : MonoBehaviour {
         return 0;
     }
 
+    public int Move(int iOffset, int jOffset, int kOffset, int rotOffset)
+    {
+        return this.UpdateItem(this.iPos + iOffset, this.jPos + jOffset, this.kPos + kOffset, (this.rot + rotOffset) % 4);
+    }
+
+    public void MoveRight()
+    {
+        this.Move(1, 0, 0, 0);
+    }
+
+    public void MoveUp()
+    {
+        this.Move(0, 1, 0, 0);
+    }
+
+    public void MoveForward()
+    {
+        this.Move(0, 0, 1, 0);
+    }
+
+    public void MoveLeft()
+    {
+        this.Move(-1, 0, 0, 0);
+    }
+
+    public void MoveDown()
+    {
+        this.Move(0, -1, 0, 0);
+    }
+
+    public void MoveBack()
+    {
+        this.Move(0, 0, -1, 0);
+    }
+
     // Currently destroys the item as there is no inventory mecanism.
     public void PickUp()
     {
         NoelSkumGame.Instance.DestroyItem(this);
+        Player.Instance.GMode = GameMode.Normal;
     }
 
     public byte[] GetSave()
