@@ -85,6 +85,12 @@ public class NoelSkumGame : MonoBehaviour {
         this.items.Add(item);
     }
 
+    public void DestroyItem(Item item)
+    {
+        this.items.Remove(item);
+        Destroy(item.gameObject);
+    }
+
     public byte[] GetSave()
     {
         List<byte> save = new List<byte>();

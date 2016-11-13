@@ -11,7 +11,18 @@ public enum GameMode
 
 public class Player : MonoBehaviour
 {
-
+    public static Player instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Player>();
+            }
+            return instance;
+        }
+    }
     public Transform head;
     public Transform Head
     {
@@ -22,6 +33,18 @@ public class Player : MonoBehaviour
                 head = FindObjectOfType<Camera>().transform;
             }
             return head;
+        }
+    }
+    public ItemMenu itemMenuInstance;
+    public ItemMenu ItemMenuInstance
+    {
+        get
+        {
+            if (itemMenuInstance == null)
+            {
+                itemMenuInstance = FindObjectOfType<ItemMenu>();
+            }
+            return itemMenuInstance;
         }
     }
     public Rigidbody c_Rigidbody;
@@ -54,6 +77,8 @@ public class Player : MonoBehaviour
     public GameObject panelPreviewInstance;
     public int itemPreviewRot;
     public Item itemPreview;
+
+    public LayerMask itemMenuOptionLayerMask;
 
     public void Start()
     {
@@ -118,6 +143,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            if (this.GMode == GameMode.Normal)
+            {
+                SelectItem();
+            }
             if (this.GMode == GameMode.SetPanel)
             {
                 PutPanelAtMouse();
@@ -144,6 +173,32 @@ public class Player : MonoBehaviour
         {
             this.C_Rigidbody.AddForce(5f * this.transform.up, ForceMode.Impulse);
         }
+    }
+
+    public void SelectItem()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 8f, this.itemMenuOptionLayerMask))
+        {
+            if (hit.collider.GetComponent<ItemMenuOption>() != null)
+            {
+                Debug.Log("Item Menu Option Hit");
+                hit.collider.GetComponent<ItemMenuOption>().Activate();
+            }
+        }
+        else if (Physics.Raycast(ray, out hit, 8f))
+        {
+            if (hit.collider.GetComponent<Item>() != null)
+            {
+                this.ItemMenuInstance.Rebuild(hit.collider.GetComponent<Item>());
+            }
+            else
+            {
+                this.ItemMenuInstance.HideItemMenu();
+            }
+        }
+
     }
 
     public void PutPanelAtMouse()

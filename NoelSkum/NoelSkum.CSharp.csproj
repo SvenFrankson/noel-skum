@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -65,11 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Construction\Cube.cs" />
-    <Compile Include="Assets\Scripts\Construction\NoelSkumGame.cs" />
     <Compile Include="Assets\Scripts\Construction\GridCell.cs" />
     <Compile Include="Assets\Scripts\Construction\Item.cs" />
+    <Compile Include="Assets\Scripts\Construction\NoelSkumGame.cs" />
     <Compile Include="Assets\Scripts\Construction\Panel.cs" />
     <Compile Include="Assets\Scripts\Construction\PanelInstance.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ItemMenu.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\ItemMenuOption.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Player.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

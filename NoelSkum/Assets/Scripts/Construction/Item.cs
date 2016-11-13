@@ -60,6 +60,12 @@ public class Item : MonoBehaviour {
         return 0;
     }
 
+    // Currently destroys the item as there is no inventory mecanism.
+    public void PickUp()
+    {
+        NoelSkumGame.Instance.DestroyItem(this);
+    }
+
     public byte[] GetSave()
     {
         List<byte> save = new List<byte>();
