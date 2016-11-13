@@ -3,21 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-public class Item : MonoBehaviour {
+public class Item : NoelSkumObject {
 
     private byte[] reference;
-    public int iPos;
-    public int jPos;
-    public int kPos;
     public int rot;
-
-    public Vector3 Position
-    {
-        get
-        {
-            return this.iPos / 2f * Vector3.right + this.jPos / 2f * Vector3.up + this.kPos / 2f * Vector3.forward;
-        }
-    }
 
     public static Item ItemConstructor(int iPos, int jPos, int kPos, int rot, byte[] reference)
     {
@@ -43,7 +32,7 @@ public class Item : MonoBehaviour {
         return item;
     }
 
-    public int UpdateItem(int iPos, int jPos, int kPos, int rot)
+    public override int UpdatePos(int iPos, int jPos, int kPos, int rot)
     {
         if ((this.iPos != iPos) || (this.jPos != jPos) || (this.kPos != kPos) || (this.rot != rot))
         {
@@ -62,7 +51,7 @@ public class Item : MonoBehaviour {
 
     public int Move(int iOffset, int jOffset, int kOffset, int rotOffset)
     {
-        return this.UpdateItem(this.iPos + iOffset, this.jPos + jOffset, this.kPos + kOffset, (this.rot + rotOffset) % 4);
+        return this.UpdatePos(this.iPos + iOffset, this.jPos + jOffset, this.kPos + kOffset, (this.rot + rotOffset) % 4);
     }
 
     public void MoveRight()
@@ -102,7 +91,7 @@ public class Item : MonoBehaviour {
         Player.Instance.GMode = GameMode.Normal;
     }
 
-    public byte[] GetSave()
+    public override byte[] GetSave()
     {
         List<byte> save = new List<byte>();
         save.Add(3);

@@ -11,15 +11,6 @@ public class Panel : GridCell
             return this.reference;
         }
     }
-    private string name;
-    private PanelInstance instance;
-    public PanelInstance Instance
-    {
-        get
-        {
-            return this.instance;
-        }
-    }
 
     public Quaternion Rotation
     {
@@ -45,29 +36,37 @@ public class Panel : GridCell
 
     }
 
-    public Panel(int iPos, int jPos, int kPos, byte reference)
-        : base(iPos, jPos, kPos)
+    public static Panel PanelConstructor(int iPos, int jPos, int kPos, byte reference)
     {
-        this.reference = reference;
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/panel_" + reference.ToString());
+        GameObject instance = Instantiate<GameObject>(prefab);
+        Panel p = instance.GetComponent<Panel>();
+
+        p.reference = reference;
+        p.iPos = iPos;
+        p.jPos = jPos;
+        p.kPos = kPos;
+
+        p.transform.position = p.Position;
+        p.transform.rotation = p.Rotation;
+
+        return p;
     }
 
-    public int Update(int iPos, int jPos, int kPos, byte reference)
+    public override int UpdatePos(int iPos, int jPos, int kPos, int rot = 0)
     {
-        if ((this.iPos != iPos) || (this.jPos != jPos) || (this.kPos != kPos) || (this.reference != reference))
+        if ((this.iPos != iPos) || (this.jPos != jPos) || (this.kPos != kPos))
         {
             this.iPos = iPos;
             this.jPos = jPos;
             this.kPos = kPos;
-            this.reference = reference;
+
+            this.transform.position = this.Position;
+            this.transform.rotation = this.Rotation;
+
             return 1;
         }
         return 0;
-    }
-
-    public PanelInstance Instantiate()
-    {
-        this.instance = PanelInstance.PanelConstructor(this);
-        return this.instance;
     }
 
     public override byte[] GetSave()

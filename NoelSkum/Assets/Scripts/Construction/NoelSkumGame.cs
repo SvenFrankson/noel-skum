@@ -72,9 +72,7 @@ public class NoelSkumGame : MonoBehaviour {
         {
             if (this.gridcells[iPos][jPos][kPos] == null)
             {
-                Panel p = new Panel(iPos, jPos, kPos, reference);
-                p.Instantiate();
-                this.gridcells[iPos][jPos][kPos] = p;
+                this.gridcells[iPos][jPos][kPos] = Panel.PanelConstructor(iPos, jPos, kPos, reference);
             }
         }
     }

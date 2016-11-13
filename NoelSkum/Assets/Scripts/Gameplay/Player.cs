@@ -64,7 +64,6 @@ public class Player : MonoBehaviour
         }
     }
     public Panel panelPreview;
-    public GameObject panelPreviewInstance;
     public int itemPreviewRot;
     public Item itemPreview;
 
@@ -72,7 +71,8 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        this.panelPreview = new Panel(-1, -1, -1, 0);
+        this.panelPreview = Panel.PanelConstructor(0, 0, 0, 0);
+        Destroy(panelPreview.GetComponent<Collider>());
         this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, new byte[] { 0, 0, 0, 0 });
         Destroy(itemPreview.GetComponent<Collider>());
         this.GMode = GameMode.Normal;
@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            if (hit.collider.GetComponent<PanelInstance>() != null)
+            if (hit.collider.GetComponent<Panel>() != null)
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
                 int iPos, jPos, kPos;
@@ -242,26 +242,14 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            if (hit.collider.GetComponent<PanelInstance>() != null)
+            if (hit.collider.GetComponent<Panel>() != null)
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
                 int iPos, jPos, kPos;
                 Panel.WorldPosToPanelPos(out iPos, out jPos, out kPos, worldPos);
-                int changed = panelPreview.Update(iPos, jPos, kPos, 1);
-                if (changed == 1)
-                {
-                    Destroy(panelPreviewInstance);
-                    GameObject prefab = Resources.Load<GameObject>("Prefabs/" + panelPreview.Reference.ToString());
-                    panelPreviewInstance = Instantiate<GameObject>(prefab);
-                    Destroy(panelPreviewInstance.GetComponent<Collider>());
-                    panelPreviewInstance.transform.position = panelPreview.Position;
-                    panelPreviewInstance.transform.rotation = panelPreview.Rotation;
-                }
-                if (this.panelPreviewInstance != null)
-                {
-                    this.panelPreviewInstance.gameObject.SetActive(true);
-                    return;
-                }
+                panelPreview.UpdatePos(iPos, jPos, kPos);
+                this.panelPreview.gameObject.SetActive(true);
+                return;
             }
         }
         HidePreviewPanel();
@@ -269,9 +257,9 @@ public class Player : MonoBehaviour
 
     public void HidePreviewPanel()
     {
-        if (this.panelPreviewInstance != null)
+        if (this.panelPreview != null)
         {
-            this.panelPreviewInstance.gameObject.SetActive(false);
+            this.panelPreview.gameObject.SetActive(false);
         }
     }
 
@@ -297,7 +285,7 @@ public class Player : MonoBehaviour
             Vector3 worldPos = hit.point + hit.normal * 0.5f;
             int iPos, jPos, kPos;
             Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
-            itemPreview.UpdateItem(iPos, jPos, kPos, this.itemPreviewRot);
+            itemPreview.UpdatePos(iPos, jPos, kPos, this.itemPreviewRot);
             this.itemPreview.gameObject.SetActive(true);
             return;
         }

@@ -66,8 +66,8 @@
     <Compile Include="Assets\Scripts\Construction\GridCell.cs" />
     <Compile Include="Assets\Scripts\Construction\Item.cs" />
     <Compile Include="Assets\Scripts\Construction\NoelSkumGame.cs" />
+    <Compile Include="Assets\Scripts\Construction\NoelSkumObject.cs" />
     <Compile Include="Assets\Scripts\Construction\Panel.cs" />
-    <Compile Include="Assets\Scripts\Construction\PanelInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenu.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenuMain.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenuMove.cs" />
