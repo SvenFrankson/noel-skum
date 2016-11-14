@@ -47,9 +47,9 @@ public class ObjectMenuMain : ObjectMenu
         {
             this.Options[ObjectMenuOptionType.PickUp].SetUp(this.Target.PickUp);
         }
-        else if (Target.MenuOptions.Contains(ObjectMenuOptionType.Move))
+        if (Target.MenuOptions.Contains(ObjectMenuOptionType.Move))
         {
-            this.Options[ObjectMenuOptionType.PickUp].SetUp(this.SwitchToItemMenuMove);
+            this.Options[ObjectMenuOptionType.Move].SetUp(this.SwitchToItemMenuMove);
         }
     }
 
