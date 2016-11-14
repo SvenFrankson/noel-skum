@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public enum GameMode
 {
     Normal,
+    Inventory,
     ObjectMenuMain,
     ItemMenuMove,
     SetPanel,
@@ -85,18 +86,6 @@ public class Player : MonoBehaviour
         {
             NoelSkumGame.Instance.Save();
         }
-        if (GUILayout.Button("GameMode Normal"))
-        {
-            this.GMode = GameMode.Normal;
-        }
-        if (GUILayout.Button("GameMode SetPanel"))
-        {
-            this.GMode = GameMode.SetPanel;
-        }
-        if (GUILayout.Button("GameMode SetItem"))
-        {
-            this.GMode = GameMode.SetItem;
-        }
         GUILayout.TextField("Current GameMode : " + GMode.ToString());
         GUILayout.TextField("ItemPreviewRotation = " + this.itemPreviewRot);
         GUILayout.EndArea();
@@ -124,6 +113,24 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             this.itemPreviewRot = (this.itemPreviewRot + 1) % 4;
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (this.GMode == GameMode.Normal)
+            {
+                this.GMode = GameMode.Inventory;
+            }
+            else if (this.GMode == GameMode.Inventory)
+            {
+                this.GMode = GameMode.Normal;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (this.GMode == GameMode.SetPanel)
+            {
+                this.GMode = GameMode.Normal;
+            }
         }
 
         if (Input.GetMouseButton(1))
@@ -217,6 +224,14 @@ public class Player : MonoBehaviour
         GMode = GameMode.Normal;
     }
 
+    public void SwitchToSetPanel(byte reference)
+    {
+        Destroy(this.panelPreview.gameObject);
+        this.panelPreview = Panel.PanelConstructor(0, 0, 0, reference);
+        Destroy(panelPreview.GetComponent<Collider>());
+        this.GMode = GameMode.SetPanel;
+    }
+
     public void PutPanelAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -231,7 +246,7 @@ public class Player : MonoBehaviour
                 Debug.Log("WorldPosToPanelPos");
                 Debug.Log("WorldPos = " + worldPos);
                 Debug.Log("IPos = " + iPos + ". JPos = " + jPos + ". KPos = " + kPos);
-                NoelSkumGame.Instance.AddPanel(iPos, jPos, kPos, 1);
+                NoelSkumGame.Instance.AddPanel(iPos, jPos, kPos, this.panelPreview.Reference);
             }
         }
     }
