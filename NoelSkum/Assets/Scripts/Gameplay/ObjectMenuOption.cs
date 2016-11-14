@@ -11,7 +11,9 @@ public enum ObjectMenuOptionType
     MoveForward,
     MoveLeft,
     MoveDown,
-    MoveBack
+    MoveBack,
+    RotatePlus,
+    RotateMinus
 }
 
 public class ObjectMenuOption : MonoBehaviour {

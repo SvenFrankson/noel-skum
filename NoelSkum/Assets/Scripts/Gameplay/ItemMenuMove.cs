@@ -47,5 +47,7 @@ public class ItemMenuMove : ObjectMenu {
         this.Options[ObjectMenuOptionType.MoveLeft].SetUp(((Item)this.Target).MoveLeft);
         this.Options[ObjectMenuOptionType.MoveDown].SetUp(((Item)this.Target).MoveDown);
         this.Options[ObjectMenuOptionType.MoveBack].SetUp(((Item)this.Target).MoveBack);
+        this.Options[ObjectMenuOptionType.RotatePlus].SetUp(((Item)this.Target).RotatePlus);
+        this.Options[ObjectMenuOptionType.RotateMinus].SetUp(((Item)this.Target).RotateMinus);
     }
 }

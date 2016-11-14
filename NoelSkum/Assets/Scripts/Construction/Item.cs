@@ -84,6 +84,16 @@ public class Item : Object {
         this.Move(0, 0, -1, 0);
     }
 
+    public void RotatePlus()
+    {
+        this.Move(0, 0, 0, 1);
+    }
+
+    public void RotateMinus()
+    {
+        this.Move(0, 0, 0, -1);
+    }
+
     // Currently destroys the item as there is no inventory mecanism.
     
 
