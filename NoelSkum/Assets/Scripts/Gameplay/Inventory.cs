@@ -11,12 +11,11 @@ public class Inventory : MonoBehaviour
     {
         this.panels = new List<byte>();
         this.items = new List<byte[]>();
-        for (int i = 0; i < 5; i++)
-        {
-            panels.Add(0);
-            panels.Add(1);
-            panels.Add(2);
-        }
+        panels.Add(0);
+        panels.Add(1);
+        panels.Add(2);
+        items.Add(new byte[] { 0, 0, 0, 0 });
+        items.Add(new byte[] { 0, 0, 0, 1 });
     }
 
     public void OnGUI()
@@ -37,7 +36,7 @@ public class Inventory : MonoBehaviour
             {
                 if (GUILayout.Button(b.ToString()))
                 {
-
+                    Player.Instance.SwitchToSetItem(b);
                 }
             }
             GUILayout.EndArea();

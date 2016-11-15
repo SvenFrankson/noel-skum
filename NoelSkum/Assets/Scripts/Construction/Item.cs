@@ -6,6 +6,13 @@ using System.Text;
 public class Item : Object {
 
     private byte[] reference;
+    public byte[] Reference
+    {
+        get
+        {
+            return this.reference;
+        }
+    }
     public int rot;
 
     public static Item ItemConstructor(int iPos, int jPos, int kPos, int rot, byte[] reference)

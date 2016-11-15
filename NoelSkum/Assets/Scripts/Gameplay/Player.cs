@@ -131,6 +131,10 @@ public class Player : MonoBehaviour
             {
                 this.GMode = GameMode.Normal;
             }
+            else if (this.GMode == GameMode.SetItem)
+            {
+                this.GMode = GameMode.Normal;
+            }
         }
 
         if (Input.GetMouseButton(1))
@@ -278,6 +282,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SwitchToSetItem(byte[] reference)
+    {
+        Destroy(this.itemPreview.gameObject);
+        this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, reference);
+        Destroy(itemPreview.GetComponent<Collider>());
+        this.GMode = GameMode.SetItem;
+    }
+
     public void PutItemAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -287,7 +299,7 @@ public class Player : MonoBehaviour
             Vector3 worldPos = hit.point + hit.normal * 0.5f;
             int iPos, jPos, kPos;
             Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
-            NoelSkumGame.Instance.AddItem(iPos, jPos, kPos, this.itemPreviewRot, new byte[] { 0, 0, 0, 0 });
+            NoelSkumGame.Instance.AddItem(iPos, jPos, kPos, this.itemPreviewRot, this.itemPreview.Reference);
         }
     }
 
