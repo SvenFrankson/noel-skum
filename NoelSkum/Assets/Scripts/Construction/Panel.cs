@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Panel : GridCell
 {
-
     private byte reference;
     public byte Reference {
         get {
