@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoelSkum.CSharp", "NoelSkum.CSharp.csproj", "{59CE0471-D7A5-F77B-BD58-B8C3F1AC6CFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoelSkum.CSharp.Editor", "NoelSkum.CSharp.Editor.csproj", "{33DC8D4F-9E5B-398D-2053-667DA5A4F26A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{59CE0471-D7A5-F77B-BD58-B8C3F1AC6CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59CE0471-D7A5-F77B-BD58-B8C3F1AC6CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59CE0471-D7A5-F77B-BD58-B8C3F1AC6CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33DC8D4F-9E5B-398D-2053-667DA5A4F26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DC8D4F-9E5B-398D-2053-667DA5A4F26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33DC8D4F-9E5B-398D-2053-667DA5A4F26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33DC8D4F-9E5B-398D-2053-667DA5A4F26A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

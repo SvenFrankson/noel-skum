@@ -52,6 +52,11 @@ public class Panel : GridCell
         return p;
     }
 
+    public override string ReferenceString()
+    {
+        return this.Reference.ToString();
+    }
+
     public override int UpdatePos(int iPos, int jPos, int kPos, int rot = 0)
     {
         if ((this.iPos != iPos) || (this.jPos != jPos) || (this.kPos != kPos))

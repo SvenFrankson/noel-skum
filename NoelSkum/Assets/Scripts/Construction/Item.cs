@@ -17,13 +17,7 @@ public class Item : Object {
 
     public static Item ItemConstructor(int iPos, int jPos, int kPos, int rot, byte[] reference)
     {
-        string referenceString = "";
-        foreach (byte b in reference)
-        {
-            referenceString += b.ToString();
-        }
-        Debug.Log("Prefabs/" + referenceString);
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/" + referenceString);
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/item_" + ReferenceString(reference));
         GameObject instance = Instantiate(prefab);
         Item item = instance.GetComponent<Item>();
 
@@ -101,8 +95,20 @@ public class Item : Object {
         this.Move(0, 0, 0, -1);
     }
 
-    // Currently destroys the item as there is no inventory mecanism.
-    
+    public static string ReferenceString(byte[] reference)
+    {
+        string referenceString = "";
+        foreach (byte b in reference)
+        {
+            referenceString += b.ToString();
+        }
+        return referenceString;
+    }
+
+    public override string ReferenceString()
+    {
+        return ReferenceString(this.Reference);
+    }
 
     public override byte[] GetSave()
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public abstract class Object : MonoBehaviour
 {
+    public string displayName;
     public int iPos;
     public int jPos;
     public int kPos;
@@ -24,6 +25,7 @@ public abstract class Object : MonoBehaviour
         Player.Instance.GMode = GameMode.Normal;
     }
 
+    public abstract string ReferenceString();
     public abstract int UpdatePos(int iPos, int jPos, int kPos, int rot = 0);
     public abstract byte[] GetSave();
 }
