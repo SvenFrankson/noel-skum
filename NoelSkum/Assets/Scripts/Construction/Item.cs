@@ -17,6 +17,7 @@ public class Item : Object {
 
     public static Item ItemConstructor(int iPos, int jPos, int kPos, int rot, byte[] reference)
     {
+        Debug.Log(ReferenceString(reference));
         GameObject prefab = Resources.Load<GameObject>("Prefabs/item_" + ReferenceString(reference));
         GameObject instance = Instantiate(prefab);
         Item item = instance.GetComponent<Item>();

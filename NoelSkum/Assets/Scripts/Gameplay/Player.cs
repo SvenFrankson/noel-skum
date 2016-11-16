@@ -284,6 +284,7 @@ public class Player : MonoBehaviour
 
     public void SwitchToSetItem(byte[] reference)
     {
+        Debug.Log(reference.ToString() + " : " + reference.Length);
         Destroy(this.itemPreview.gameObject);
         this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, reference);
         Destroy(itemPreview.GetComponent<Collider>());

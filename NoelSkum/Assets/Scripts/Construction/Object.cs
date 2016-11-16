@@ -11,6 +11,16 @@ public abstract class Object : MonoBehaviour
 
     public List<ObjectMenuOptionType> MenuOptions;
 
+    public void HighLight(Color color, float outlineWidth)
+    {
+        Material[] materials = this.GetComponent<Renderer>().materials;
+        foreach (Material material in materials)
+        {
+            material.SetColor("_OutlineColor", color);
+            material.SetFloat("_Outline", outlineWidth);
+        }
+    }
+
     public Vector3 Position
     {
         get

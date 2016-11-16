@@ -37,7 +37,10 @@ public class ObjectMenu : MonoBehaviour {
 
     public void ShowItemMenu()
     {
-        Debug.Log("ShowItemMenu");
+        if (this.Target != null)
+        {
+            this.Target.HighLight(new Color(150f / 255f, 200f / 255f, 80f / 255f), 0.01f);
+        }
         foreach (ObjectMenuOption option in this.Options.Values)
         {
             option.gameObject.SetActive(true);
@@ -47,6 +50,10 @@ public class ObjectMenu : MonoBehaviour {
 
     public void HideItemMenu()
     {
+        if (this.Target != null)
+        {
+            this.Target.HighLight(Color.black, 0.005f);
+        }
         foreach (ObjectMenuOption option in this.Options.Values)
         {
             option.gameObject.SetActive(false);

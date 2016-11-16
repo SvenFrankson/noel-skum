@@ -34,7 +34,7 @@ public abstract class InventoryObject {
 
         DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/item_" + Item.ReferenceString(r) + "_inventory");
 
-        reference = item.Reference;
+        reference = r;
         stackable = false;
         displayName = item.displayName;
     }
