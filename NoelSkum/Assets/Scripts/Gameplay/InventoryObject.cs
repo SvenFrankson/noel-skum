@@ -22,7 +22,7 @@ public abstract class InventoryObject {
 
         DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/panel_" + r.ToString() + "_inventory");
 
-        reference = new byte[] { p.Reference };
+        reference = new byte[] { r };
         stackable = false;
         displayName = p.displayName;
     }

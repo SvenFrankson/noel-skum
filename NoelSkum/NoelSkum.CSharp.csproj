@@ -75,6 +75,9 @@
     <Compile Include="Assets\Scripts\Gameplay\ObjectMenuMain.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ObjectMenuOption.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Player.cs" />
+    <Compile Include="Assets\Scripts\Terrain\Chunck.cs" />
+    <Compile Include="Assets\Scripts\Terrain\HeightMapLoader.cs" />
+    <Compile Include="Assets\Scripts\Terrain\RandomSeed.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />

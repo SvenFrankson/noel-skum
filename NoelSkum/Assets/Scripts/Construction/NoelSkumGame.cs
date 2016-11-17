@@ -36,8 +36,8 @@ public class NoelSkumGame : MonoBehaviour {
         this.gridcells = new GridCell[255][][];
         for (int i = 0; i < 255; i++)
         {
-            this.gridcells[i] = new GridCell[31][];
-            for (int j = 0; j < 31; j++)
+            this.gridcells[i] = new GridCell[255][];
+            for (int j = 0; j < 255; j++)
             {
                 this.gridcells[i][j] = new GridCell[255];
             }
@@ -101,7 +101,7 @@ public class NoelSkumGame : MonoBehaviour {
         List<byte> save = new List<byte>();
         for (int i = 0; i < 255; i++)
         {
-            for (int j = 0; j < 31; j++)
+            for (int j = 0; j < 255; j++)
             {
                 for (int k = 0; k < 255; k++)
                 {
@@ -121,6 +121,7 @@ public class NoelSkumGame : MonoBehaviour {
 
     public int Save()
     {
+        Debug.Log("Start Save");
         string directoryPath = Application.dataPath + "/../Save/";
         Directory.CreateDirectory(directoryPath);
         string saveFilePath = directoryPath + "grid.data";
@@ -133,6 +134,7 @@ public class NoelSkumGame : MonoBehaviour {
         dataStream.Close();
         saveFile.Close();
 
+        Debug.Log("Save Done");
         return 1;
     }
 
@@ -173,6 +175,9 @@ public class NoelSkumGame : MonoBehaviour {
                 b = -1;
             }
         }
+
+        dataStream.Close();
+        saveFile.Close();
 
         return 1;
     }

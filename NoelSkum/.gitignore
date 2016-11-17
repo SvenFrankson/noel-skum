@@ -1,2 +1,6 @@
 /Library/
 /Temp/
+/testBuild_Data/
+/player_win_x86.pdb
+/player_win_x86_s.pdb
+/testBuild.exe

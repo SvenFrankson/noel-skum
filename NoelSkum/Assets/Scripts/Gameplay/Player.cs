@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            if (hit.collider.GetComponent<Panel>() != null)
+            if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
                 int iPos, jPos, kPos;
@@ -261,7 +261,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            if (hit.collider.GetComponent<Panel>() != null)
+            if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
                 int iPos, jPos, kPos;
