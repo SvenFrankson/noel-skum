@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 public enum Side
 {
@@ -28,51 +29,65 @@ public class NoelSkumGame : MonoBehaviour {
         }
     }
 
-    private GridCell[][][] gridcells;
+    private int gridCellSize = 127;
+    private Dictionary<string,GridCell[][][]> gridcells;
     private List<Item> items;
 
     public void Start()
     {
-        this.gridcells = new GridCell[255][][];
-        for (int i = 0; i < 255; i++)
-        {
-            this.gridcells[i] = new GridCell[255][];
-            for (int j = 0; j < 255; j++)
-            {
-                this.gridcells[i][j] = new GridCell[255];
-            }
-        }
-
+        this.gridcells = new Dictionary<string, GridCell[][][]>();
         this.items = new List<Item>();
-
-        /*
-        Panel p = new Panel(6, 1, 6, 0);
-        p.Instantiate();
-        this.gridItems[6][1][6] = p;
-
-        p = new Panel(8, 1, 6, 0);
-        p.Instantiate();
-        this.gridItems[8][1][6] = p;
-
-        p = new Panel(8, 1, 8, 0);
-        p.Instantiate();
-        this.gridItems[8][1][8] = p;
-
-        p = new Panel(6, 1, 8, 0);
-        p.Instantiate();
-        this.gridItems[6][1][8] = p;
-        */
 
         this.Load();
     }
 
+    static string Coordinates(int I, int J, int K)
+    {
+        return I + "_" + J + "_" + K;
+    }
+
+    public void AddGridCells(int I, int J, int K)
+    {
+        string coordinates = Coordinates(I, J, K);
+        GridCell[][][] gridCell = new GridCell[this.gridCellSize][][];
+        for (int i = 0; i < this.gridCellSize; i++)
+        {
+            gridCell[i] = new GridCell[this.gridCellSize][];
+            for (int j = 0; j < this.gridCellSize; j++)
+            {
+                gridCell[i][j] = new GridCell[this.gridCellSize];
+            }
+        }
+        this.gridcells.Add(coordinates, gridCell);
+    }
+
+    public GridCell[][][] GetGridCells(int iPos, int jPos, int kPos)
+    {
+        int I = iPos / this.gridCellSize;
+        int J = jPos / this.gridCellSize;
+        int K = kPos / this.gridCellSize;
+        string c = Coordinates(I, J, K);
+
+        if (!this.gridcells.ContainsKey(c))
+        {
+            this.AddGridCells(I, J, K);
+        }
+
+        return this.gridcells[c];
+    }
+
     public void AddPanel(int iPos, int jPos, int kPos, byte reference) 
     {
+        GridCell[][][] gridCell = GetGridCells(iPos, jPos, kPos);
+        iPos = iPos % this.gridCellSize;
+        jPos = jPos % this.gridCellSize;
+        kPos = kPos % this.gridCellSize;
+
         if (Panel.IsPanelPos(iPos, jPos, kPos))
         {
-            if (this.gridcells[iPos][jPos][kPos] == null)
+            if (gridCell[iPos][jPos][kPos] == null)
             {
-                this.gridcells[iPos][jPos][kPos] = Panel.PanelConstructor(iPos, jPos, kPos, reference);
+                gridCell[iPos][jPos][kPos] = Panel.PanelConstructor(iPos, jPos, kPos, reference);
             }
         }
     }
@@ -87,7 +102,11 @@ public class NoelSkumGame : MonoBehaviour {
     {
         if (target.GetType() == typeof(GridCell))
         {
-            this.gridcells[target.iPos][target.jPos][target.kPos] = null;
+            GridCell[][][] gridCell = GetGridCells(target.iPos, target.jPos, target.kPos);
+            int iPos = target.iPos % this.gridCellSize;
+            int jPos = target.jPos % this.gridCellSize;
+            int kPos = target.kPos % this.gridCellSize;
+            gridCell[iPos][jPos][kPos] = null;
         }
         else if (target.GetType() == typeof(Item))
         {
@@ -99,15 +118,18 @@ public class NoelSkumGame : MonoBehaviour {
     public byte[] GetSave()
     {
         List<byte> save = new List<byte>();
-        for (int i = 0; i < 255; i++)
+        foreach (GridCell[][][] gridCell in this.gridcells.Values)
         {
-            for (int j = 0; j < 255; j++)
+            for (int i = 0; i < this.gridCellSize; i++)
             {
-                for (int k = 0; k < 255; k++)
+                for (int j = 0; j < this.gridCellSize; j++)
                 {
-                    if (this.gridcells[i][j][k] != null)
+                    for (int k = 0; k < this.gridCellSize; k++)
                     {
-                        save.AddRange(this.gridcells[i][j][k].GetSave());
+                        if (gridCell[i][j][k] != null)
+                        {
+                            save.AddRange(gridCell[i][j][k].GetSave());
+                        }
                     }
                 }
             }
@@ -126,13 +148,22 @@ public class NoelSkumGame : MonoBehaviour {
         Directory.CreateDirectory(directoryPath);
         string saveFilePath = directoryPath + "grid.data";
 
-        FileStream saveFile = new FileStream(saveFilePath, FileMode.Create, FileAccess.Write);
-        BinaryWriter dataStream = new BinaryWriter(saveFile);
+        byte[] saveData = this.GetSave();
+        Debug.Log(saveData.Length);
 
-        dataStream.Write(this.GetSave());
+        try
+        {
+            FileStream saveFile = new FileStream(saveFilePath, FileMode.Create, FileAccess.Write);
+            BinaryWriter dataStream = new BinaryWriter(saveFile);
 
-        dataStream.Close();
-        saveFile.Close();
+            dataStream.Write(saveData);
+
+            dataStream.Close();
+            saveFile.Close();
+        }
+        catch (Exception e) {
+            Debug.Log(e);
+        }
 
         Debug.Log("Save Done");
         return 1;
@@ -144,40 +175,48 @@ public class NoelSkumGame : MonoBehaviour {
         Directory.CreateDirectory(directoryPath);
         string saveFilePath = directoryPath + "grid.data";
 
-        FileStream saveFile = new FileStream(saveFilePath, FileMode.Open, FileAccess.Read);
-        BinaryReader dataStream = new BinaryReader(saveFile);
-
-        int b = dataStream.ReadByte();
-        while (b != -1)
+        try
         {
-            if (b == 2)
-            {
-                int iPos = dataStream.ReadByte();
-                int jPos = dataStream.ReadByte();
-                int kPos = dataStream.ReadByte();
-                int reference = dataStream.ReadByte();
-                this.AddPanel(iPos, jPos, kPos, (byte)reference);
-            }
-            else if (b == 3) {
-                int iPos = dataStream.ReadByte();
-                int jPos = dataStream.ReadByte();
-                int kPos = dataStream.ReadByte();
-                int rot = dataStream.ReadByte();
-                byte[] reference = dataStream.ReadBytes(4);
-                this.AddItem(iPos, jPos, kPos, rot, reference);
-            }
-            try
-            {
-                b = dataStream.ReadByte();
-            }
-            catch (EndOfStreamException)
-            {
-                b = -1;
-            }
-        }
+            FileStream saveFile = new FileStream(saveFilePath, FileMode.Open, FileAccess.Read);
+            BinaryReader dataStream = new BinaryReader(saveFile);
 
-        dataStream.Close();
-        saveFile.Close();
+            int b = dataStream.ReadByte();
+            while (b != -1)
+            {
+                if (b == 2)
+                {
+                    int iPos = dataStream.ReadByte();
+                    int jPos = dataStream.ReadByte();
+                    int kPos = dataStream.ReadByte();
+                    int reference = dataStream.ReadByte();
+                    this.AddPanel(iPos, jPos, kPos, (byte)reference);
+                }
+                else if (b == 3)
+                {
+                    int iPos = dataStream.ReadByte();
+                    int jPos = dataStream.ReadByte();
+                    int kPos = dataStream.ReadByte();
+                    int rot = dataStream.ReadByte();
+                    byte[] reference = dataStream.ReadBytes(4);
+                    this.AddItem(iPos, jPos, kPos, rot, reference);
+                }
+                try
+                {
+                    b = dataStream.ReadByte();
+                }
+                catch (EndOfStreamException)
+                {
+                    b = -1;
+                }
+            }
+
+            dataStream.Close();
+            saveFile.Close();
+        }
+        catch (Exception)
+        {
+
+        }
 
         return 1;
     }

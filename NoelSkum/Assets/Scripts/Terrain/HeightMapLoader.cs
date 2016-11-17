@@ -58,7 +58,7 @@ public class HeightMapLoader {
         heightMap = new byte[1024 * 1024];
         for (int i = 0; i < 1024 * 1024; i++)
         {
-            heightMap[i] = (byte)Mathf.FloorToInt(heightMapTextureColors[i].r * 256);
+            heightMap[i] = (byte)Mathf.FloorToInt(heightMapTextureColors[i].r * 128);
         }
 
         return heightMap;
