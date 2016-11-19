@@ -29,72 +29,60 @@ public class NoelSkumGame : MonoBehaviour {
         }
     }
 
-    private int gridCellSize = 127;
-    private Dictionary<string,GridCell[][][]> gridcells;
+    private Dictionary<Coordinates, GridCell[][][]> gridcells;
     private List<Item> items;
 
     public void Start()
     {
-        this.gridcells = new Dictionary<string, GridCell[][][]>();
+        this.gridcells = new Dictionary<Coordinates, GridCell[][][]>();
         this.items = new List<Item>();
 
         this.Load();
     }
 
-    static string Coordinates(int I, int J, int K)
+    public void AddGridCells(Coordinates c)
     {
-        return I + "_" + J + "_" + K;
-    }
-
-    public void AddGridCells(int I, int J, int K)
-    {
-        string coordinates = Coordinates(I, J, K);
-        GridCell[][][] gridCell = new GridCell[this.gridCellSize][][];
-        for (int i = 0; i < this.gridCellSize; i++)
+        GridCell[][][] gridCell = new GridCell[Coordinates.GRIDSIZE][][];
+        for (int i = 0; i < Coordinates.GRIDSIZE; i++)
         {
-            gridCell[i] = new GridCell[this.gridCellSize][];
-            for (int j = 0; j < this.gridCellSize; j++)
+            gridCell[i] = new GridCell[Coordinates.GRIDSIZE][];
+            for (int j = 0; j < Coordinates.GRIDSIZE; j++)
             {
-                gridCell[i][j] = new GridCell[this.gridCellSize];
+                gridCell[i][j] = new GridCell[Coordinates.GRIDSIZE];
             }
         }
-        this.gridcells.Add(coordinates, gridCell);
+        this.gridcells.Add(c, gridCell);
     }
 
-    public GridCell[][][] GetGridCells(int iPos, int jPos, int kPos)
+    public GridCell[][][] GetGridCells(Coordinates cGlobal)
     {
-        int I = iPos / this.gridCellSize;
-        int J = jPos / this.gridCellSize;
-        int K = kPos / this.gridCellSize;
-        string c = Coordinates(I, J, K);
+        Coordinates c = cGlobal.ToBlock;
 
         if (!this.gridcells.ContainsKey(c))
         {
-            this.AddGridCells(I, J, K);
+            this.AddGridCells(c);
         }
 
         return this.gridcells[c];
     }
 
-    public void AddPanel(int iPos, int jPos, int kPos, byte reference) 
+    public void AddPanel(Coordinates cGlobal, byte reference) 
     {
-        GridCell[][][] gridCell = GetGridCells(iPos, jPos, kPos);
-        iPos = iPos % this.gridCellSize;
-        jPos = jPos % this.gridCellSize;
-        kPos = kPos % this.gridCellSize;
+        Coordinates cLocal = cGlobal.ToLocal;
+        GridCell[][][] gridCell = GetGridCells(cGlobal);
 
-        if (Panel.IsPanelPos(iPos, jPos, kPos))
+        if (Panel.IsPanelPos(cGlobal))
         {
-            if (gridCell[iPos][jPos][kPos] == null)
+            if (gridCell[cLocal.i][cLocal.j][cLocal.k] == null)
             {
-                gridCell[iPos][jPos][kPos] = Panel.PanelConstructor(iPos, jPos, kPos, reference);
+                gridCell[cLocal.i][cLocal.j][cLocal.k] = Panel.PanelConstructor(cGlobal, reference);
             }
         }
     }
 
-    public void AddItem(int iPos, int jPos, int kPos, int rot, byte[] reference)
+    public void AddItem(Coordinates cGlobal, int rot, byte[] reference)
     {
-        Item item = Item.ItemConstructor(iPos, jPos, kPos, rot, reference);
+        Item item = Item.ItemConstructor(cGlobal, rot, reference);
         this.items.Add(item);
     }
 
@@ -102,11 +90,9 @@ public class NoelSkumGame : MonoBehaviour {
     {
         if (target.GetType() == typeof(GridCell))
         {
-            GridCell[][][] gridCell = GetGridCells(target.iPos, target.jPos, target.kPos);
-            int iPos = target.iPos % this.gridCellSize;
-            int jPos = target.jPos % this.gridCellSize;
-            int kPos = target.kPos % this.gridCellSize;
-            gridCell[iPos][jPos][kPos] = null;
+            GridCell[][][] gridCell = GetGridCells(target.cGlobal);
+            Coordinates cLocal = target.cGlobal.ToLocal;
+            gridCell[cLocal.i][cLocal.j][cLocal.k] = null;
         }
         else if (target.GetType() == typeof(Item))
         {
@@ -120,11 +106,11 @@ public class NoelSkumGame : MonoBehaviour {
         List<byte> save = new List<byte>();
         foreach (GridCell[][][] gridCell in this.gridcells.Values)
         {
-            for (int i = 0; i < this.gridCellSize; i++)
+            for (int i = 0; i < Coordinates.GRIDSIZE; i++)
             {
-                for (int j = 0; j < this.gridCellSize; j++)
+                for (int j = 0; j < Coordinates.GRIDSIZE; j++)
                 {
-                    for (int k = 0; k < this.gridCellSize; k++)
+                    for (int k = 0; k < Coordinates.GRIDSIZE; k++)
                     {
                         if (gridCell[i][j][k] != null)
                         {
@@ -188,17 +174,19 @@ public class NoelSkumGame : MonoBehaviour {
                     int iPos = dataStream.ReadByte();
                     int jPos = dataStream.ReadByte();
                     int kPos = dataStream.ReadByte();
+                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
                     int reference = dataStream.ReadByte();
-                    this.AddPanel(iPos, jPos, kPos, (byte)reference);
+                    this.AddPanel(cGlobal, (byte)reference);
                 }
                 else if (b == 3)
                 {
                     int iPos = dataStream.ReadByte();
                     int jPos = dataStream.ReadByte();
                     int kPos = dataStream.ReadByte();
+                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
                     int rot = dataStream.ReadByte();
                     byte[] reference = dataStream.ReadBytes(4);
-                    this.AddItem(iPos, jPos, kPos, rot, reference);
+                    this.AddItem(cGlobal, rot, reference);
                 }
                 try
                 {

@@ -72,9 +72,9 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        this.panelPreview = Panel.PanelConstructor(0, 0, 0, 0);
+        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, 0);
         Destroy(panelPreview.GetComponent<Collider>());
-        this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, new byte[] { 0, 0, 0, 0 });
+        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, new byte[] { 0, 0, 0, 0 });
         Destroy(itemPreview.GetComponent<Collider>());
         this.GMode = GameMode.Normal;
     }
@@ -231,7 +231,7 @@ public class Player : MonoBehaviour
     public void SwitchToSetPanel(byte reference)
     {
         Destroy(this.panelPreview.gameObject);
-        this.panelPreview = Panel.PanelConstructor(0, 0, 0, reference);
+        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, reference);
         Destroy(panelPreview.GetComponent<Collider>());
         this.GMode = GameMode.SetPanel;
     }
@@ -245,12 +245,8 @@ public class Player : MonoBehaviour
             if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
-                int iPos, jPos, kPos;
-                Panel.WorldPosToPanelPos(out iPos, out jPos, out kPos, worldPos);
-                Debug.Log("WorldPosToPanelPos");
-                Debug.Log("WorldPos = " + worldPos);
-                Debug.Log("IPos = " + iPos + ". JPos = " + jPos + ". KPos = " + kPos);
-                NoelSkumGame.Instance.AddPanel(iPos, jPos, kPos, this.panelPreview.Reference);
+                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos);
+                NoelSkumGame.Instance.AddPanel(cGlobal, this.panelPreview.Reference);
             }
         }
     }
@@ -264,9 +260,8 @@ public class Player : MonoBehaviour
             if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
-                int iPos, jPos, kPos;
-                Panel.WorldPosToPanelPos(out iPos, out jPos, out kPos, worldPos);
-                panelPreview.UpdatePos(iPos, jPos, kPos);
+                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos);
+                panelPreview.UpdatePos(cGlobal);
                 this.panelPreview.gameObject.SetActive(true);
                 return;
             }
@@ -286,7 +281,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log(reference.ToString() + " : " + reference.Length);
         Destroy(this.itemPreview.gameObject);
-        this.itemPreview = Item.ItemConstructor(0, 0, 0, 0, reference);
+        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, reference);
         Destroy(itemPreview.GetComponent<Collider>());
         this.GMode = GameMode.SetItem;
     }
@@ -298,9 +293,8 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 4f))
         {
             Vector3 worldPos = hit.point + hit.normal * 0.5f;
-            int iPos, jPos, kPos;
-            Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
-            NoelSkumGame.Instance.AddItem(iPos, jPos, kPos, this.itemPreviewRot, this.itemPreview.Reference);
+            Coordinates cGlobal = Item.WorldPosToItemPos(worldPos);
+            NoelSkumGame.Instance.AddItem(cGlobal, this.itemPreviewRot, this.itemPreview.Reference);
         }
     }
 
@@ -311,9 +305,8 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 4f))
         {
             Vector3 worldPos = hit.point + hit.normal * 0.5f;
-            int iPos, jPos, kPos;
-            Item.WorldPosToItemPos(out iPos, out jPos, out kPos, worldPos);
-            itemPreview.UpdatePos(iPos, jPos, kPos, this.itemPreviewRot);
+            Coordinates cGlobal = Item.WorldPosToItemPos(worldPos);
+            itemPreview.UpdatePos(cGlobal, this.itemPreviewRot);
             this.itemPreview.gameObject.SetActive(true);
             return;
         }

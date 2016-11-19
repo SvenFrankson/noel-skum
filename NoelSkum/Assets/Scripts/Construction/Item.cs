@@ -15,16 +15,14 @@ public class Item : Object {
     }
     public int rot;
 
-    public static Item ItemConstructor(int iPos, int jPos, int kPos, int rot, byte[] reference)
+    public static Item ItemConstructor(Coordinates cGlobal, int rot, byte[] reference)
     {
         Debug.Log(ReferenceString(reference));
         GameObject prefab = Resources.Load<GameObject>("Prefabs/item_" + ReferenceString(reference));
         GameObject instance = Instantiate(prefab);
         Item item = instance.GetComponent<Item>();
 
-        item.iPos = iPos;
-        item.jPos = jPos;
-        item.kPos = kPos;
+        item.cGlobal = cGlobal;
         item.reference = reference;
         item.rot = rot;
 
@@ -34,13 +32,11 @@ public class Item : Object {
         return item;
     }
 
-    public override int UpdatePos(int iPos, int jPos, int kPos, int rot)
+    public override int UpdatePos(Coordinates cGlobal, int rot)
     {
-        if ((this.iPos != iPos) || (this.jPos != jPos) || (this.kPos != kPos) || (this.rot != rot))
+        if (this.cGlobal != cGlobal || (this.rot != rot))
         {
-            this.iPos = iPos;
-            this.jPos = jPos;
-            this.kPos = kPos;
+            this.cGlobal = cGlobal;
             this.rot = rot;
 
             this.transform.position = this.Position;
@@ -53,7 +49,8 @@ public class Item : Object {
 
     public int Move(int iOffset, int jOffset, int kOffset, int rotOffset)
     {
-        return this.UpdatePos(this.iPos + iOffset, this.jPos + jOffset, this.kPos + kOffset, (this.rot + rotOffset) % 4);
+        Coordinates newCGlobal = this.cGlobal + new Coordinates(iOffset, jOffset, kOffset);
+        return this.UpdatePos(newCGlobal, (this.rot + rotOffset) % 4);
     }
 
     public void MoveRight()
@@ -115,19 +112,21 @@ public class Item : Object {
     {
         List<byte> save = new List<byte>();
         save.Add(3);
-        save.Add((byte)this.iPos);
-        save.Add((byte)this.jPos);
-        save.Add((byte)this.kPos);
+        save.Add((byte)this.cGlobal.i);
+        save.Add((byte)this.cGlobal.j);
+        save.Add((byte)this.cGlobal.k);
         save.Add((byte)this.rot);
         save.AddRange(this.reference);
 
         return save.ToArray();
     }
 
-    public static void WorldPosToItemPos(out int iPos, out int jPos, out int kPos, Vector3 worldPos)
+    public static Coordinates WorldPosToItemPos(Vector3 worldPos)
     {
-        iPos = Mathf.RoundToInt(2 * worldPos.x);
-        jPos = Mathf.RoundToInt(2 * worldPos.y);
-        kPos = Mathf.RoundToInt(2 * worldPos.z);
+        int i = Mathf.RoundToInt(2 * worldPos.x);
+        int j = Mathf.RoundToInt(2 * worldPos.y);
+        int k = Mathf.RoundToInt(2 * worldPos.z);
+
+        return new Coordinates(i, j, k);
     }
 }

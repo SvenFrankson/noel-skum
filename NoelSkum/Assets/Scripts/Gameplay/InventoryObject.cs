@@ -4,7 +4,6 @@ using System.Collections;
 public abstract class InventoryObject {
 
     protected byte[] reference;
-    private bool stackable;
     private string displayName;
     public string DisplayName
     {
@@ -23,7 +22,6 @@ public abstract class InventoryObject {
         DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/panel_" + r.ToString() + "_inventory");
 
         reference = new byte[] { r };
-        stackable = false;
         displayName = p.displayName;
     }
 
@@ -35,7 +33,6 @@ public abstract class InventoryObject {
         DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/item_" + Item.ReferenceString(r) + "_inventory");
 
         reference = r;
-        stackable = false;
         displayName = item.displayName;
     }
 

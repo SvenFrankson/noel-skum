@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Terrain\Chunck.cs" />
     <Compile Include="Assets\Scripts\Terrain\HeightMapLoader.cs" />
     <Compile Include="Assets\Scripts\Terrain\RandomSeed.cs" />
+    <Compile Include="Assets\Scripts\Tools\Coordinates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />

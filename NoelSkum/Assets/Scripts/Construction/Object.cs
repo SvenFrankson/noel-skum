@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public abstract class Object : MonoBehaviour
 {
     public string displayName;
-    public int iPos;
-    public int jPos;
-    public int kPos;
+    public Coordinates cGlobal;
 
     public List<ObjectMenuOptionType> MenuOptions;
 
@@ -25,7 +23,7 @@ public abstract class Object : MonoBehaviour
     {
         get
         {
-            return this.iPos / 2f * Vector3.right + this.jPos / 2f * Vector3.up + this.kPos / 2f * Vector3.forward;
+            return this.cGlobal.Position / 2f;
         }
     }
 
@@ -36,6 +34,6 @@ public abstract class Object : MonoBehaviour
     }
 
     public abstract string ReferenceString();
-    public abstract int UpdatePos(int iPos, int jPos, int kPos, int rot = 0);
+    public abstract int UpdatePos(Coordinates cGlobal, int rot = 0);
     public abstract byte[] GetSave();
 }

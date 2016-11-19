@@ -9,7 +9,7 @@ public class Cube : GridCell
         throw new System.NotImplementedException();
     }
 
-    public override int UpdatePos(int iPos, int jPos, int kPos, int rot = 0)
+    public override int UpdatePos(Coordinates cGlobal, int rot = 0)
     {
         throw new System.NotImplementedException();
     }
