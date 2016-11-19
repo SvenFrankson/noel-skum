@@ -82,7 +82,7 @@ public class PlanetDataGenerator : EditorWindow {
 
     static public float EvaluateBiCubic(int x, int y, RandomSeed r)
     {
-        int degree = 15;
+        int degree = 13;
         float value = 0f;
 
         for (int d = 8; d < degree; d++)
