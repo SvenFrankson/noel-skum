@@ -4,17 +4,57 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
+    public static Inventory Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<Inventory>();
+            }
+            return instance;
+        }
+    }
     private List<InventoryObject> objects;
 
     public void Start()
     {
         this.objects = new List<InventoryObject>();
-        this.objects.Add(new InventoryPanel(0));
-        this.objects.Add(new InventoryPanel(1));
-        this.objects.Add(new InventoryPanel(2));
-        this.objects.Add(new InventoryItem(new byte[] { 0, 0, 0, 0 }));
-        this.objects.Add(new InventoryItem(new byte[] { 0, 0, 0, 1 }));
-        this.objects.Add(new InventoryItem(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 0 }));
+        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 1 }));
+        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 2 }));
+    }
+
+    public void Add(InventoryObject target)
+    {
+        this.objects.Add(target);
+    }
+
+    public void Remove(InventoryObject target)
+    {
+        if (this.objects.Contains(target))
+        {
+            this.objects.Remove(target);
+        }
+    }
+
+    public InventoryPanel FindSamePanel(InventoryObject panel)
+    {
+        foreach (InventoryObject t in this.objects)
+        {
+            if (t.GetType() == typeof(InventoryPanel))
+            {
+                if (t.Reference == panel.Reference)
+                {
+                    return (InventoryPanel)t;
+                }
+            }
+        }
+        return null;
     }
 
     public void OnGUI()
@@ -30,7 +70,7 @@ public class Inventory : MonoBehaviour
                     InventoryObject o = this.objects[j];
                     if (GUILayout.Button(o.DisplayPicture, GUILayout.Width(64), GUILayout.Height(64)))
                     {
-                        o.OnSelectedItem();
+                        o.EquipObject();
                     }
                 }
                 GUILayout.EndHorizontal();

@@ -5,14 +5,6 @@ using System.Text;
 
 public class Item : Object {
 
-    private byte[] reference;
-    public byte[] Reference
-    {
-        get
-        {
-            return this.reference;
-        }
-    }
     public int rot;
 
     public static Item ItemConstructor(Coordinates cGlobal, int rot, byte[] reference)
@@ -91,16 +83,6 @@ public class Item : Object {
     public void RotateMinus()
     {
         this.Move(0, 0, 0, -1);
-    }
-
-    public static string ReferenceString(byte[] reference)
-    {
-        string referenceString = "";
-        foreach (byte b in reference)
-        {
-            referenceString += b.ToString();
-        }
-        return referenceString;
     }
 
     public override string ReferenceString()

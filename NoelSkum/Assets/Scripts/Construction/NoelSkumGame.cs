@@ -66,7 +66,7 @@ public class NoelSkumGame : MonoBehaviour {
         return this.gridcells[c];
     }
 
-    public void AddPanel(Coordinates cGlobal, byte reference) 
+    public void AddPanel(Coordinates cGlobal, byte[] reference) 
     {
         Coordinates cLocal = cGlobal.ToLocal;
         GridCell[][][] gridCell = GetGridCells(cGlobal);
@@ -175,8 +175,8 @@ public class NoelSkumGame : MonoBehaviour {
                     int jPos = dataStream.ReadByte();
                     int kPos = dataStream.ReadByte();
                     Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
-                    int reference = dataStream.ReadByte();
-                    this.AddPanel(cGlobal, (byte)reference);
+                    byte[] reference = dataStream.ReadBytes(4);
+                    this.AddPanel(cGlobal, reference);
                 }
                 else if (b == 3)
                 {

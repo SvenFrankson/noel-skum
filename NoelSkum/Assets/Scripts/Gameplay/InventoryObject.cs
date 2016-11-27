@@ -4,6 +4,13 @@ using System.Collections;
 public abstract class InventoryObject {
 
     protected byte[] reference;
+    public byte[] Reference
+    {
+        get
+        {
+            return this.reference;
+        }
+    }
     private string displayName;
     public string DisplayName
     {
@@ -14,71 +21,60 @@ public abstract class InventoryObject {
     }
     public Texture2D DisplayPicture;
 
-    public InventoryObject(byte r)
-    {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/panel_" + r.ToString());
-        Panel p = prefab.GetComponent<Panel>();
-
-        DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/panel_" + r.ToString() + "_inventory");
-
-        reference = new byte[] { r };
-        displayName = p.displayName;
-    }
-
     public InventoryObject(byte[] r)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/item_" + Item.ReferenceString(r));
-        Item item = prefab.GetComponent<Item>();
-
-        DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/item_" + Item.ReferenceString(r) + "_inventory");
-
-        reference = r;
-        displayName = item.displayName;
+        GameObject prefab;
+        if (r[0] == 0)
+        {
+            prefab = Resources.Load<GameObject>("Prefabs/panel_" + Panel.ReferenceString(r));
+            Panel p = prefab.GetComponent<Panel>();
+            this.displayName = p.displayName;
+            this.DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/panel_" + Panel.ReferenceString(r) + "_inventory");
+        }
+        else if (r[0] == 1)
+        {
+            prefab = Resources.Load<GameObject>("Prefabs/item_" + Item.ReferenceString(r));
+            Item item = prefab.GetComponent<Item>();
+            this.displayName = item.displayName;
+            this.DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/item_" + Item.ReferenceString(r) + "_inventory");
+        }
+        this.reference = r;
     }
 
-    public abstract void OnSelectedItem();
+    public static InventoryObject CreateFromObject(Object target)
+    {
+        if (target.GetType() == typeof(Panel))
+        {
+            return new InventoryPanel(target.Reference);
+        }
+        else if (target.GetType() == typeof(Item))
+        {
+            return new InventoryItem(target.Reference);
+        }
+        return null;
+    }
+
+    public void EquipObject()
+    {
+        Inventory.Instance.Remove(this);
+        Player.Instance.Equip(this);
+    }
 }
 
 public class InventoryPanel : InventoryObject
 {
-    public byte PanelReference
-    {
-        get
-        {
-            return reference[0];
-        }
-    }
-
-    public InventoryPanel(byte reference)
+    public InventoryPanel(byte[] reference)
         : base(reference)
     {
 
-    }
-
-    public override void OnSelectedItem()
-    {
-        Player.Instance.SwitchToSetPanel(this.PanelReference);
     }
 }
 
 public class InventoryItem : InventoryObject
 {
-    public byte[] Reference
-    {
-        get
-        {
-            return reference;
-        }
-    }
-
     public InventoryItem(byte[] reference)
         : base(reference)
     {
 
-    }
-
-    public override void OnSelectedItem()
-    {
-        Player.Instance.SwitchToSetItem(this.Reference);
     }
 }

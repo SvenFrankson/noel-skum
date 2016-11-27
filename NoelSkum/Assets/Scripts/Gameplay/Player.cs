@@ -70,11 +70,13 @@ public class Player : MonoBehaviour
 
     public LayerMask itemMenuOptionLayerMask;
 
+    public InventoryObject equiped = null;
+
     public void Start()
     {
-        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, 0);
+        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, new byte[] { 0, 0, 0, 0 });
         Destroy(panelPreview.GetComponent<Collider>());
-        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, new byte[] { 0, 0, 0, 0 });
+        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, new byte[] { 1, 0, 0, 0 });
         Destroy(itemPreview.GetComponent<Collider>());
         this.GMode = GameMode.Normal;
     }
@@ -129,11 +131,11 @@ public class Player : MonoBehaviour
         {
             if (this.GMode == GameMode.SetPanel)
             {
-                this.GMode = GameMode.Normal;
+                this.UnEquip();
             }
             else if (this.GMode == GameMode.SetItem)
             {
-                this.GMode = GameMode.Normal;
+                this.UnEquip();
             }
         }
 
@@ -184,6 +186,33 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Equip(InventoryObject target) {
+        this.equiped = target;
+        if (this.equiped.GetType() == typeof(InventoryPanel)) {
+            this.SwitchToSetPanel(this.equiped.Reference);
+        }
+        else if (this.equiped.GetType() == typeof(InventoryItem))
+        {
+            this.SwitchToSetItem(this.equiped.Reference);
+        }
+    }
+
+    public void UnEquip()
+    {
+        if (this.equiped != null)
+        {
+            Inventory.Instance.Add(this.equiped);
+        }
+        this.equiped = null;
+        this.GMode = GameMode.Normal;
+    }
+
+    public void UseEquip()
+    {
+        this.equiped = null;
+        this.GMode = GameMode.Normal;
+    }
+
     public void SelectObject()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -228,7 +257,7 @@ public class Player : MonoBehaviour
         GMode = GameMode.Normal;
     }
 
-    public void SwitchToSetPanel(byte reference)
+    public void SwitchToSetPanel(byte[] reference)
     {
         Destroy(this.panelPreview.gameObject);
         this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, reference);
@@ -247,6 +276,12 @@ public class Player : MonoBehaviour
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
                 Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos);
                 NoelSkumGame.Instance.AddPanel(cGlobal, this.panelPreview.Reference);
+                InventoryPanel next = Inventory.Instance.FindSamePanel(this.equiped);
+                this.UseEquip();
+                if (next != null)
+                {
+                    next.EquipObject();
+                }
             }
         }
     }
@@ -295,6 +330,7 @@ public class Player : MonoBehaviour
             Vector3 worldPos = hit.point + hit.normal * 0.5f;
             Coordinates cGlobal = Item.WorldPosToItemPos(worldPos);
             NoelSkumGame.Instance.AddItem(cGlobal, this.itemPreviewRot, this.itemPreview.Reference);
+            this.UseEquip();
         }
     }
 

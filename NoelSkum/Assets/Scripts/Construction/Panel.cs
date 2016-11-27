@@ -4,13 +4,6 @@ using System.Collections.Generic;
 
 public class Panel : GridCell
 {
-    private byte reference;
-    public byte Reference {
-        get {
-            return this.reference;
-        }
-    }
-
     public Quaternion Rotation
     {
         get
@@ -35,9 +28,9 @@ public class Panel : GridCell
 
     }
 
-    public static Panel PanelConstructor(Coordinates cGlobal, byte reference)
+    public static Panel PanelConstructor(Coordinates cGlobal, byte[] reference)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/panel_" + reference.ToString());
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/panel_" + ReferenceString(reference));
         GameObject instance = Instantiate<GameObject>(prefab);
         Panel p = instance.GetComponent<Panel>();
 
@@ -52,7 +45,7 @@ public class Panel : GridCell
 
     public override string ReferenceString()
     {
-        return this.Reference.ToString();
+        return ReferenceString(this.Reference);
     }
 
     public override int UpdatePos(Coordinates cGlobal, int rot = 0)
@@ -74,7 +67,7 @@ public class Panel : GridCell
         List<byte> save = new List<byte>();
         save.Add(2);
         save.AddRange(this.GetPosSave());
-        save.Add(this.reference);
+        save.AddRange(this.reference);
 
         return save.ToArray();
     }

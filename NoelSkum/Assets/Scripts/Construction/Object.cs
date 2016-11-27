@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public abstract class Object : MonoBehaviour
 {
+    protected byte[] reference;
+    public byte[] Reference
+    {
+        get
+        {
+            return this.reference;
+        }
+    }
     public string displayName;
     public Coordinates cGlobal;
 
@@ -30,10 +38,21 @@ public abstract class Object : MonoBehaviour
     public void PickUp()
     {
         NoelSkumGame.Instance.DestroyObject(this);
+        Inventory.Instance.Add(InventoryObject.CreateFromObject(this));
         Player.Instance.GMode = GameMode.Normal;
     }
 
     public abstract string ReferenceString();
     public abstract int UpdatePos(Coordinates cGlobal, int rot = 0);
     public abstract byte[] GetSave();
+
+    public static string ReferenceString(byte[] reference)
+    {
+        string referenceString = "";
+        foreach (byte b in reference)
+        {
+            referenceString += b.ToString();
+        }
+        return referenceString;
+    }
 }
