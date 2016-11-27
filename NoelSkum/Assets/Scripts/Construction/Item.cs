@@ -6,6 +6,18 @@ using System.Text;
 public class Item : Object {
 
     public int rot;
+    private Container content;
+    public Container Content
+    {
+        get
+        {
+            if (this.content == null)
+            {
+                this.content = this.GetComponent<Container>();
+            }
+            return this.content;
+        }
+    }
 
     public static Item ItemConstructor(Coordinates cGlobal, int rot, byte[] reference)
     {
@@ -85,6 +97,12 @@ public class Item : Object {
         this.Move(0, 0, 0, -1);
     }
 
+    public void SwitchToContainer()
+    {
+        Inventory.Instance.TargetContainer = this.Content;
+        Player.Instance.GMode = GameMode.Container;
+    }
+
     public override string ReferenceString()
     {
         return ReferenceString(this.Reference);
@@ -93,12 +111,23 @@ public class Item : Object {
     public override byte[] GetSave()
     {
         List<byte> save = new List<byte>();
-        save.Add(3);
+        if (this.Content != null)
+        {
+            save.Add(4);
+        }
+        else
+        {
+            save.Add(3);
+        }
         save.Add((byte)this.cGlobal.i);
         save.Add((byte)this.cGlobal.j);
         save.Add((byte)this.cGlobal.k);
         save.Add((byte)this.rot);
         save.AddRange(this.reference);
+        if (this.Content != null)
+        {
+            save.AddRange(Content.GetSave());
+        }
 
         return save.ToArray();
     }

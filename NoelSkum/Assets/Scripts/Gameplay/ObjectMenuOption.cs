@@ -5,6 +5,7 @@ using System;
 public enum ObjectMenuOptionType
 {
     PickUp,
+    Container,
     Move,
     MoveRight,
     MoveUp,

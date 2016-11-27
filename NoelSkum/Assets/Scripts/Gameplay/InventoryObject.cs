@@ -41,6 +41,19 @@ public abstract class InventoryObject {
         this.reference = r;
     }
 
+    public static InventoryObject CreateFromRef(byte[] r)
+    {
+        if (r[0] == 0)
+        {
+            return new InventoryPanel(r);
+        }
+        else if (r[0] == 1)
+        {
+            return new InventoryItem(r);
+        }
+        return null;
+    }
+
     public static InventoryObject CreateFromObject(Object target)
     {
         if (target.GetType() == typeof(Panel))

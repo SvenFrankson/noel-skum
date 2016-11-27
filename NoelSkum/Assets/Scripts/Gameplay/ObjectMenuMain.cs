@@ -51,6 +51,10 @@ public class ObjectMenuMain : ObjectMenu
         {
             this.Options[ObjectMenuOptionType.Move].SetUp(this.SwitchToItemMenuMove);
         }
+        if (Target.MenuOptions.Contains(ObjectMenuOptionType.Container))
+        {
+            this.Options[ObjectMenuOptionType.Container].SetUp((((Item)this.Target).SwitchToContainer));
+        }
     }
 
     public void SwitchToItemMenuMove()

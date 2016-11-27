@@ -6,6 +6,7 @@ public enum GameMode
 {
     Normal,
     Inventory,
+    Container,
     ObjectMenuMain,
     ItemMenuMove,
     SetPanel,
@@ -126,6 +127,10 @@ public class Player : MonoBehaviour
             {
                 this.GMode = GameMode.Normal;
             }
+            else if (this.GMode == GameMode.Container)
+            {
+                this.GMode = GameMode.Normal;
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -136,6 +141,14 @@ public class Player : MonoBehaviour
             else if (this.GMode == GameMode.SetItem)
             {
                 this.UnEquip();
+            }
+            else if (this.GMode == GameMode.Inventory)
+            {
+                this.GMode = GameMode.Normal;
+            }
+            else if (this.GMode == GameMode.Container)
+            {
+                this.GMode = GameMode.Normal;
             }
         }
 

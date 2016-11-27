@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Construction\NoelSkumGame.cs" />
     <Compile Include="Assets\Scripts\Construction\Object.cs" />
     <Compile Include="Assets\Scripts\Construction\Panel.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Container.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Inventory.cs" />
     <Compile Include="Assets\Scripts\Gameplay\InventoryObject.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ItemMenuMove.cs" />

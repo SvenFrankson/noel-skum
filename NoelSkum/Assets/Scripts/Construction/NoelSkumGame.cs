@@ -80,10 +80,11 @@ public class NoelSkumGame : MonoBehaviour {
         }
     }
 
-    public void AddItem(Coordinates cGlobal, int rot, byte[] reference)
+    public Item AddItem(Coordinates cGlobal, int rot, byte[] reference)
     {
         Item item = Item.ItemConstructor(cGlobal, rot, reference);
         this.items.Add(item);
+        return item;
     }
 
     public void DestroyObject(Object target)
@@ -187,6 +188,23 @@ public class NoelSkumGame : MonoBehaviour {
                     int rot = dataStream.ReadByte();
                     byte[] reference = dataStream.ReadBytes(4);
                     this.AddItem(cGlobal, rot, reference);
+                }
+                else if (b == 4)
+                {
+                    int iPos = dataStream.ReadByte();
+                    int jPos = dataStream.ReadByte();
+                    int kPos = dataStream.ReadByte();
+                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
+                    int rot = dataStream.ReadByte();
+                    byte[] reference = dataStream.ReadBytes(4);
+                    Item item = this.AddItem(cGlobal, rot, reference);
+                    int contentCount = dataStream.ReadByte();
+                    for (int i = 0; i < contentCount; i++)
+                    {
+                        Debug.Log("Loading content into Container");
+                        reference = dataStream.ReadBytes(4);
+                        item.Content.Add(InventoryObject.CreateFromRef(reference));
+                    }
                 }
                 try
                 {

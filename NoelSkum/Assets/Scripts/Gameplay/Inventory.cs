@@ -18,6 +18,19 @@ public class Inventory : MonoBehaviour
     }
     private List<InventoryObject> objects;
 
+    private Container targetContainer;
+    public Container TargetContainer
+    {
+        get
+        {
+            return this.targetContainer;
+        }
+        set
+        {
+            this.targetContainer = value;
+        }
+    }
+
     public void Start()
     {
         this.objects = new List<InventoryObject>();
@@ -59,9 +72,9 @@ public class Inventory : MonoBehaviour
 
     public void OnGUI()
     {
-        if (Player.Instance.GMode == GameMode.Inventory)
+        if ((Player.Instance.GMode == GameMode.Inventory) || (Player.Instance.GMode == GameMode.Container))
         {
-            GUILayout.BeginArea(Rect.MinMaxRect(0.25f * Screen.width, 0.25f * Screen.height, 0.75f * Screen.width, 0.75f * Screen.height));
+            GUILayout.BeginArea(Rect.MinMaxRect(0.55f * Screen.width, 0.25f * Screen.height, 0.95f * Screen.width, 0.75f * Screen.height));
             for (int i = 0; i < this.objects.Count; i += 6)
             {
                 GUILayout.BeginHorizontal();
@@ -70,12 +83,25 @@ public class Inventory : MonoBehaviour
                     InventoryObject o = this.objects[j];
                     if (GUILayout.Button(o.DisplayPicture, GUILayout.Width(64), GUILayout.Height(64)))
                     {
-                        o.EquipObject();
+                        OnInventoryClick(o);
                     }
                 }
                 GUILayout.EndHorizontal();
             }
             GUILayout.EndArea();
+        }
+    }
+
+    public void OnInventoryClick(InventoryObject o)
+    {
+        if (Player.Instance.GMode == GameMode.Inventory)
+        {
+            o.EquipObject();
+        }
+        else if (Player.Instance.GMode == GameMode.Container)
+        {
+            this.Remove(o);
+            this.TargetContainer.Add(o);
         }
     }
 }
