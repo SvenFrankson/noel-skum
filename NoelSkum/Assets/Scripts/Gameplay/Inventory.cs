@@ -52,6 +52,7 @@ public class Inventory : MonoBehaviour
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 0 }));
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 1 }));
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 2 }));
+        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 3 }));
     }
 
     public void Add(InventoryObject target)
