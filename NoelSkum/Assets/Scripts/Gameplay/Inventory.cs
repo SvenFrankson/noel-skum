@@ -37,6 +37,18 @@ public class Inventory : MonoBehaviour
         this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
         this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
         this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
+        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 0 }));
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 1 }));
         this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 2 }));
@@ -61,7 +73,7 @@ public class Inventory : MonoBehaviour
         {
             if (t.GetType() == typeof(InventoryPanel))
             {
-                if (t.Reference == panel.Reference)
+                if (Object.ReferenceString(t.Reference) == Object.ReferenceString(panel.Reference))
                 {
                     return (InventoryPanel)t;
                 }

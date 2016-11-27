@@ -293,6 +293,7 @@ public class Player : MonoBehaviour
                 this.UseEquip();
                 if (next != null)
                 {
+                    Debug.Log("Another object found. Keep going.");
                     next.EquipObject();
                 }
             }
