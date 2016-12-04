@@ -68,7 +68,7 @@ public class Panel : GridCell
     {
         List<byte> save = new List<byte>();
         save.Add(2);
-        save.AddRange(this.GetPosSave());
+        save.AddRange(this.cGlobal.ToByte());
         save.AddRange(this.reference);
 
         return save.ToArray();

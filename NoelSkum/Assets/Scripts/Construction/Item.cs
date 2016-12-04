@@ -119,9 +119,7 @@ public class Item : Object {
         {
             save.Add(3);
         }
-        save.Add((byte)this.cGlobal.i);
-        save.Add((byte)this.cGlobal.j);
-        save.Add((byte)this.cGlobal.k);
+        save.AddRange(this.cGlobal.ToByte());
         save.Add((byte)this.rot);
         save.AddRange(this.reference);
         if (this.Content != null)

@@ -162,67 +162,50 @@ public class NoelSkumGame : MonoBehaviour {
         Directory.CreateDirectory(directoryPath);
         string saveFilePath = directoryPath + "grid.data";
 
-        try
-        {
-            FileStream saveFile = new FileStream(saveFilePath, FileMode.Open, FileAccess.Read);
-            BinaryReader dataStream = new BinaryReader(saveFile);
+        FileStream saveFile = new FileStream(saveFilePath, FileMode.Open, FileAccess.Read);
+        BinaryReader dataStream = new BinaryReader(saveFile);
 
-            int b = dataStream.ReadByte();
-            while (b != -1)
+        int b = dataStream.ReadByte();
+        while (b != -1)
+        {
+            byte[] cGlobalByte = dataStream.ReadBytes(6);
+            Coordinates cGlobal = new Coordinates(cGlobalByte);
+            if (b == 2)
             {
-                if (b == 2)
+                byte[] reference = dataStream.ReadBytes(4);
+                this.AddPanel(cGlobal, reference);
+            }
+            else if (b == 3)
+            {
+                int rot = dataStream.ReadByte();
+                byte[] reference = dataStream.ReadBytes(4);
+                this.AddItem(cGlobal, rot, reference);
+            }
+            else if (b == 4)
+            {
+                int rot = dataStream.ReadByte();
+                byte[] reference = dataStream.ReadBytes(4);
+                Item item = this.AddItem(cGlobal, rot, reference);
+                int contentCount = dataStream.ReadByte();
+                for (int i = 0; i < contentCount; i++)
                 {
-                    int iPos = dataStream.ReadByte();
-                    int jPos = dataStream.ReadByte();
-                    int kPos = dataStream.ReadByte();
-                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
-                    byte[] reference = dataStream.ReadBytes(4);
-                    this.AddPanel(cGlobal, reference);
-                }
-                else if (b == 3)
-                {
-                    int iPos = dataStream.ReadByte();
-                    int jPos = dataStream.ReadByte();
-                    int kPos = dataStream.ReadByte();
-                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
-                    int rot = dataStream.ReadByte();
-                    byte[] reference = dataStream.ReadBytes(4);
-                    this.AddItem(cGlobal, rot, reference);
-                }
-                else if (b == 4)
-                {
-                    int iPos = dataStream.ReadByte();
-                    int jPos = dataStream.ReadByte();
-                    int kPos = dataStream.ReadByte();
-                    Coordinates cGlobal = new Coordinates(iPos, jPos, kPos);
-                    int rot = dataStream.ReadByte();
-                    byte[] reference = dataStream.ReadBytes(4);
-                    Item item = this.AddItem(cGlobal, rot, reference);
-                    int contentCount = dataStream.ReadByte();
-                    for (int i = 0; i < contentCount; i++)
-                    {
-                        Debug.Log("Loading content into Container");
-                        reference = dataStream.ReadBytes(4);
-                        item.Content.Add(InventoryObject.CreateFromRef(reference));
-                    }
-                }
-                try
-                {
-                    b = dataStream.ReadByte();
-                }
-                catch (EndOfStreamException)
-                {
-                    b = -1;
+                    Debug.Log("Loading content into Container");
+                    reference = dataStream.ReadBytes(4);
+                    item.Content.Add(InventoryObject.CreateFromRef(reference));
                 }
             }
-
-            dataStream.Close();
-            saveFile.Close();
+            try
+            {
+                b = dataStream.ReadByte();
+            }
+            catch (EndOfStreamException)
+            {
+                b = -1;
+            }
         }
-        catch (Exception)
-        {
 
-        }
+        dataStream.Close();
+        saveFile.Close();
 
         return 1;
     }

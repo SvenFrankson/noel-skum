@@ -22,6 +22,13 @@ public struct Coordinates {
         this.k = k;
     }
 
+    public Coordinates(byte[] b)
+    {
+        this.i = b[0] * GRIDSIZE + b[1];
+        this.j = b[2] * GRIDSIZE + b[3];
+        this.k = b[4] * GRIDSIZE + b[5];
+    }
+
     public Coordinates ToBlock 
     {
         get {
@@ -43,6 +50,18 @@ public struct Coordinates {
         {
             return new Vector3(this.i, this.j, this.k);
         }
+    }
+
+    public byte[] ToByte()
+    {
+        byte[] b = new byte[6];
+        b[0] = (byte)this.ToBlock.i;
+        b[1] = (byte)this.ToLocal.i;
+        b[2] = (byte)this.ToBlock.j;
+        b[3] = (byte)this.ToLocal.j;
+        b[4] = (byte)this.ToBlock.k;
+        b[5] = (byte)this.ToLocal.k;
+        return b;
     }
 
     static public Coordinates Zero {
