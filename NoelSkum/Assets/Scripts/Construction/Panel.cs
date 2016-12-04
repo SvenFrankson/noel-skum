@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Panel : GridCell
 {
+    public bool Foundation;
+
     public Quaternion Rotation
     {
         get
@@ -72,7 +74,7 @@ public class Panel : GridCell
         return save.ToArray();
     }
 
-    static public bool IsPanelPos(Coordinates cGlobal)
+    static public bool IsPanelPos(Coordinates cGlobal, bool foundation = false)
     {
         int evenCount = 0;
         if (cGlobal.i % 2 == 1)
@@ -88,10 +90,15 @@ public class Panel : GridCell
             evenCount++;
         }
 
+        if (foundation && cGlobal.j % 2 != 1)
+        {
+            return false;
+        }
+
         return evenCount == 1;
     }
 
-    static public Coordinates WorldPosToPanelPos(Vector3 worldPos) 
+    static public Coordinates WorldPosToPanelPos(Vector3 worldPos, bool foundation = false) 
     {
         Coordinates cGlobal = Coordinates.Zero;
         int[] iPoses = new int[2];
@@ -113,7 +120,7 @@ public class Panel : GridCell
                 for (int k = 0; k < 2; k++)
                 {
                     Coordinates cTemp = new Coordinates(iPoses[i], jPoses[j], kPoses[k]);
-                    if (IsPanelPos(cTemp))
+                    if (IsPanelPos(cTemp, foundation))
                     {
                         float value = Mathf.Pow(2 * worldPos.x - iPoses[i], 2f) + Mathf.Pow(2 * worldPos.y - jPoses[j], 2f) + Mathf.Pow(2 * worldPos.z - kPoses[k], 2f);
                         if (value < bestValue)
