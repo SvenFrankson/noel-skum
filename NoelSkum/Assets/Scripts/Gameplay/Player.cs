@@ -63,6 +63,10 @@ public class Player : MonoBehaviour
             this.HidePreviewPanel();
             this.HidePreviewItem();
             this.gMode = value;
+            if (this.gMode != GameMode.Container)
+            {
+                Inventory.Instance.TargetContainer = null;
+            }
         }
     }
     public Panel panelPreview;

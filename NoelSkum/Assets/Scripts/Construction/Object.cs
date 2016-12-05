@@ -19,7 +19,14 @@ public abstract class Object : MonoBehaviour
 
     public void HighLight(Color color, float outlineWidth)
     {
-        Material[] materials = this.GetComponent<Renderer>().materials;
+        Renderer[] renderers = this.GetComponentsInChildren<Renderer>();
+        List<Material> materials = new List<Material>();
+
+        foreach (Renderer r in renderers)
+        {
+            materials.AddRange(r.GetComponent<Renderer>().materials);
+        }
+
         foreach (Material material in materials)
         {
             material.SetColor("_OutlineColor", color);

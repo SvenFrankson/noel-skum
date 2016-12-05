@@ -4,6 +4,19 @@ using System.Collections.Generic;
 
 public class Container : MonoBehaviour
 {
+    private Animator c_animator;
+    private Animator C_Animator
+    {
+        get
+        {
+            if (c_animator == null)
+            {
+                c_animator = this.GetComponent<Animator>();
+            }
+            return c_animator;
+        }
+    }
+
     private List<InventoryObject> objects;
     private List<InventoryObject> Objects
     {
@@ -28,6 +41,16 @@ public class Container : MonoBehaviour
         {
             this.Objects.Remove(target);
         }
+    }
+
+    public void Open()
+    {
+        this.C_Animator.SetTrigger("Open");
+    }
+
+    public void Close()
+    {
+        this.C_Animator.SetTrigger("Close");
     }
 
     public void OnGUI()
