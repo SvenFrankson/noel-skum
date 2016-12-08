@@ -30,7 +30,7 @@ public class Item : Object {
         item.reference = reference;
         item.rot = rot;
 
-        item.transform.position = item.Position;
+        item.transform.position = item.Position();
         item.transform.rotation = Quaternion.AngleAxis(rot * 90f, Vector3.up);
 
         return item;
@@ -43,7 +43,7 @@ public class Item : Object {
             this.cGlobal = cGlobal;
             this.rot = rot;
 
-            this.transform.position = this.Position;
+            this.transform.position = this.Position();
             this.transform.rotation = Quaternion.AngleAxis(this.rot * 90f, Vector3.up);
 
             return 1;
@@ -103,6 +103,11 @@ public class Item : Object {
         Player.Instance.GMode = GameMode.Container;
     }
 
+    public override Vector3 Position()
+    {
+        return this.cGlobal.Position / 2f + 0.25f * Vector3.one;
+    }
+
     public override string ReferenceString()
     {
         return ReferenceString(this.Reference);
@@ -132,9 +137,9 @@ public class Item : Object {
 
     public static Coordinates WorldPosToItemPos(Vector3 worldPos)
     {
-        int i = Mathf.RoundToInt(2 * worldPos.x);
-        int j = Mathf.RoundToInt(2 * worldPos.y);
-        int k = Mathf.RoundToInt(2 * worldPos.z);
+        int i = Mathf.RoundToInt(2 * (worldPos.x - 0.5f));
+        int j = Mathf.RoundToInt(2 * (worldPos.y - 0.5f));
+        int k = Mathf.RoundToInt(2 * (worldPos.z - 0.5f));
 
         return new Coordinates(i, j, k);
     }

@@ -345,7 +345,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            Vector3 worldPos = hit.point;
+            Vector3 worldPos = hit.point + hit.normal * 0.25f;
             Coordinates cGlobal = Item.WorldPosToItemPos(worldPos);
             NoelSkumGame.Instance.AddItem(cGlobal, this.itemPreviewRot, this.itemPreview.Reference);
             this.UseEquip();
@@ -358,7 +358,7 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 4f))
         {
-            Vector3 worldPos = hit.point;
+            Vector3 worldPos = hit.point + hit.normal * 0.25f;
             Coordinates cGlobal = Item.WorldPosToItemPos(worldPos);
             itemPreview.UpdatePos(cGlobal, this.itemPreviewRot);
             this.itemPreview.gameObject.SetActive(true);

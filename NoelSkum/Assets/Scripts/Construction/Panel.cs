@@ -39,7 +39,7 @@ public class Panel : GridCell
         p.reference = reference;
         p.cGlobal = cGlobal;
 
-        p.transform.position = p.Position;
+        p.transform.position = p.Position();
         p.transform.rotation = p.Rotation;
 
         return p;
@@ -56,12 +56,17 @@ public class Panel : GridCell
         {
             this.cGlobal = cGlobal;
 
-            this.transform.position = this.Position;
+            this.transform.position = this.Position();
             this.transform.rotation = this.Rotation;
 
             return 1;
         }
         return 0;
+    }
+
+    public override Vector3 Position()
+    {
+        return this.cGlobal.Position / 2f;
     }
 
     public override byte[] GetSave()

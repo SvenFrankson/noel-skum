@@ -34,14 +34,6 @@ public abstract class Object : MonoBehaviour
         }
     }
 
-    public Vector3 Position
-    {
-        get
-        {
-            return this.cGlobal.Position / 2f;
-        }
-    }
-
     public void PickUp()
     {
         NoelSkumGame.Instance.DestroyObject(this);
@@ -49,6 +41,7 @@ public abstract class Object : MonoBehaviour
         Player.Instance.GMode = GameMode.Normal;
     }
 
+    public abstract Vector3 Position();
     public abstract string ReferenceString();
     public abstract int UpdatePos(Coordinates cGlobal, int rot = 0);
     public abstract byte[] GetSave();

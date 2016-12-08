@@ -32,7 +32,7 @@ public class ObjectMenu : MonoBehaviour {
     public virtual void Rebuild(Object target)
     {
         this.Target = target;
-        this.transform.position = this.Target.Position;
+        this.transform.position = this.Target.Position();
     }
 
     public void ShowItemMenu()
