@@ -55,6 +55,10 @@ public class ObjectMenuMain : ObjectMenu
         {
             this.Options[ObjectMenuOptionType.Container].SetUp((((Item)this.Target).SwitchToContainer));
         }
+        if (Target.MenuOptions.Contains(ObjectMenuOptionType.OpenClose))
+        {
+            this.Options[ObjectMenuOptionType.OpenClose].SetUp((((Panel)this.Target).SwitchOpenDoor));
+        }
     }
 
     public void SwitchToItemMenuMove()

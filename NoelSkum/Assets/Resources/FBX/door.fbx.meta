@@ -1,34 +1,27 @@
 fileFormatVersion: 2
-guid: 6a8b09ecce2389c46a443d6313cd6725
-timeCreated: 1478911139
+guid: 1afca8530c6cec64298594e27c7f990e
+timeCreated: 1481414055
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Flat.000
-    100004: stair_collider
-    100006: Stairs
-    100008: Stairs_Collider
-    400000: //RootNode
-    400002: Flat.000
-    400004: stair_collider
-    400006: Stairs
-    400008: Stairs_Collider
-    2300000: //RootNode
-    2300002: Flat.000
-    2300004: stair_collider
-    2300006: Stairs
-    2300008: Stairs_Collider
-    3300000: //RootNode
-    3300002: Flat.000
-    3300004: stair_collider
-    3300006: Stairs
-    3300008: Stairs_Collider
-    4300000: Flat.000
-    4300002: stair_collider
-    4300004: Stairs_Collider
-    4300006: Stairs
+    100000: Door
+    100002: //RootNode
+    100004: Frame
+    100006: Knob
+    400000: Door
+    400002: //RootNode
+    400004: Frame
+    400006: Knob
+    2300000: Door
+    2300002: Frame
+    2300004: Knob
+    3300000: Door
+    3300002: Frame
+    3300004: Knob
+    4300000: Knob
+    4300002: Door
+    4300004: Frame
   materials:
     importMaterials: 1
     materialName: 0
@@ -70,7 +63,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

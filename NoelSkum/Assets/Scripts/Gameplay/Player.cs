@@ -291,7 +291,7 @@ public class Player : MonoBehaviour
             if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
-                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos, panelPreview.Foundation);
+                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos, panelPreview.Foundation, panelPreview.Door);
                 NoelSkumGame.Instance.AddPanel(cGlobal, this.panelPreview.Reference);
                 InventoryPanel next = Inventory.Instance.FindSamePanel(this.equiped);
                 this.UseEquip();
@@ -313,7 +313,7 @@ public class Player : MonoBehaviour
             if ((hit.collider.GetComponent<Panel>() != null) || (hit.collider.GetComponent<Chunck>() != null))
             {
                 Vector3 worldPos = hit.point + hit.normal * 0.5f;
-                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos, panelPreview.Foundation);
+                Coordinates cGlobal = Panel.WorldPosToPanelPos(worldPos, panelPreview.Foundation, panelPreview.Door);
                 panelPreview.UpdatePos(cGlobal);
                 this.panelPreview.gameObject.SetActive(true);
                 return;
