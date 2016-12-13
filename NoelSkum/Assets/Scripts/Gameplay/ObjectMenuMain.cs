@@ -53,11 +53,11 @@ public class ObjectMenuMain : ObjectMenu
         }
         if (Target.MenuOptions.Contains(ObjectMenuOptionType.Container))
         {
-            this.Options[ObjectMenuOptionType.Container].SetUp((((Item)this.Target).SwitchToContainer));
+            this.Options[ObjectMenuOptionType.Container].SetUp((((Container)this.Target).SwitchToContainer));
         }
         if (Target.MenuOptions.Contains(ObjectMenuOptionType.OpenClose))
         {
-            this.Options[ObjectMenuOptionType.OpenClose].SetUp((((Panel)this.Target).SwitchOpenDoor));
+            this.Options[ObjectMenuOptionType.OpenClose].SetUp((((Door)this.Target).SwitchOpenDoor));
         }
     }
 

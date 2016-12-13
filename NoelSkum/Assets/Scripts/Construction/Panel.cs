@@ -6,42 +6,6 @@ public class Panel : GridCell
 {
     public bool Foundation;
     public bool Door;
-    private bool openedDoor;
-    public bool OpenedDoor
-    {
-        get
-        {
-            return this.openedDoor;
-        }
-        set
-        {
-            if (this.openedDoor != value)
-            {
-                if (value == true)
-                {
-                    this.Open();
-                }
-                else
-                {
-                    this.Close();
-                }
-            }
-            this.openedDoor = value;
-        }
-    }
-
-    private Animator c_animator;
-    private Animator C_Animator
-    {
-        get
-        {
-            if (c_animator == null)
-            {
-                c_animator = this.GetComponent<Animator>();
-            }
-            return c_animator;
-        }
-    }
 
     public Quaternion Rotation
     {
@@ -64,7 +28,6 @@ public class Panel : GridCell
                 return Quaternion.Euler(45f, 45f, 45f);
             }
         }
-
     }
 
     public static Panel PanelConstructor(Coordinates cGlobal, byte[] reference)
@@ -106,21 +69,6 @@ public class Panel : GridCell
         return this.cGlobal.Position / 2f;
     }
 
-    public void Open()
-    {
-        this.C_Animator.SetTrigger("Open");
-    }
-
-    public void Close()
-    {
-        this.C_Animator.SetTrigger("Close");
-    }
-
-    public void SwitchOpenDoor()
-    {
-        this.OpenedDoor = !this.OpenedDoor;
-    }
-
     public override byte[] GetSave()
     {
         List<byte> save = new List<byte>();
@@ -131,7 +79,7 @@ public class Panel : GridCell
         return save.ToArray();
     }
 
-    static public bool IsPanelPos(Coordinates cGlobal, bool foundation = false, bool door = false)
+    public bool IsPanelPos(Coordinates cGlobal)
     {
         int evenCount = 0;
         if (cGlobal.i % 2 == 1)
@@ -147,12 +95,12 @@ public class Panel : GridCell
             evenCount++;
         }
 
-        if (foundation && cGlobal.j % 2 != 1)
+        if (this.Foundation && cGlobal.j % 2 != 1)
         {
             return false;
         }
 
-        if (door && cGlobal.j % 2 == 1)
+        if (this.Door && cGlobal.j % 2 == 1)
         {
             return false;
         }
@@ -160,7 +108,7 @@ public class Panel : GridCell
         return evenCount == 1;
     }
 
-    static public Coordinates WorldPosToPanelPos(Vector3 worldPos, bool foundation = false, bool door = false) 
+    public Coordinates WorldPosToPanelPos(Vector3 worldPos) 
     {
         Coordinates cGlobal = Coordinates.Zero;
         int[] iPoses = new int[2];
@@ -182,7 +130,7 @@ public class Panel : GridCell
                 for (int k = 0; k < 2; k++)
                 {
                     Coordinates cTemp = new Coordinates(iPoses[i], jPoses[j], kPoses[k]);
-                    if (IsPanelPos(cTemp, foundation, door))
+                    if (this.IsPanelPos(cTemp))
                     {
                         float value = Mathf.Pow(2 * worldPos.x - iPoses[i], 2f) + Mathf.Pow(2 * worldPos.y - jPoses[j], 2f) + Mathf.Pow(2 * worldPos.z - kPoses[k], 2f);
                         if (value < bestValue)

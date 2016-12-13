@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Container : MonoBehaviour
+public class Container : Item
 {
     private Animator c_animator;
     private Animator C_Animator
@@ -28,6 +28,12 @@ public class Container : MonoBehaviour
             }
             return this.objects;
         }
+    }
+
+    public void SwitchToContainer()
+    {
+        Inventory.Instance.TargetContainer = this;
+        Player.Instance.GMode = GameMode.Container;
     }
 
     public void Add(InventoryObject target)
@@ -84,9 +90,13 @@ public class Container : MonoBehaviour
         Inventory.Instance.Add(o);
     }
 
-    public byte[] GetSave()
+    public override byte[] GetSave()
     {
         List<byte> save = new List<byte>();
+        save.Add(4);
+        save.AddRange(this.cGlobal.ToByte());
+        save.Add((byte)this.rot);
+        save.AddRange(this.reference);
         save.Add((byte)this.Objects.Count);
         foreach (InventoryObject o in this.Objects)
         {

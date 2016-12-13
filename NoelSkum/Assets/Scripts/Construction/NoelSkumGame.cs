@@ -71,12 +71,9 @@ public class NoelSkumGame : MonoBehaviour {
         Coordinates cLocal = cGlobal.ToLocal;
         GridCell[][][] gridCell = GetGridCells(cGlobal);
 
-        if (Panel.IsPanelPos(cGlobal))
+        if (gridCell[cLocal.i][cLocal.j][cLocal.k] == null)
         {
-            if (gridCell[cLocal.i][cLocal.j][cLocal.k] == null)
-            {
-                gridCell[cLocal.i][cLocal.j][cLocal.k] = Panel.PanelConstructor(cGlobal, reference);
-            }
+            gridCell[cLocal.i][cLocal.j][cLocal.k] = Panel.PanelConstructor(cGlobal, reference);
         }
     }
 
@@ -185,13 +182,13 @@ public class NoelSkumGame : MonoBehaviour {
             {
                 int rot = dataStream.ReadByte();
                 byte[] reference = dataStream.ReadBytes(4);
-                Item item = this.AddItem(cGlobal, rot, reference);
+                Container container = this.AddItem(cGlobal, rot, reference) as Container;
                 int contentCount = dataStream.ReadByte();
                 for (int i = 0; i < contentCount; i++)
                 {
                     Debug.Log("Loading content into Container");
                     reference = dataStream.ReadBytes(4);
-                    item.Content.Add(InventoryObject.CreateFromRef(reference));
+                    container.Add(InventoryObject.CreateFromRef(reference));
                 }
             }
             try

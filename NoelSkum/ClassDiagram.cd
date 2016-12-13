@@ -1,140 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Cube">
-    <Position X="8.75" Y="7" Width="1.5" />
+    <Position X="0.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAIAAACCAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\Cube.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Door">
+    <Position X="3" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAAAAEAAIABAAAAAAAAAAAAAAAAAAAAAAACgAAA=</HashCode>
+      <FileName>Assets\Scripts\Construction\Door.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="GridCell">
-    <Position X="7.75" Y="5.25" Width="1.5" />
+    <Position X="1.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\GridCell.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Item">
-    <Position X="4.75" Y="5.25" Width="1.5" />
+    <Position X="5.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAIAAAAIAAAAAgAAAAAIACACGAAAAMRAABAACAAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="NoelSkumGame" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.5" />
+    <Position X="10.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIgIAAACAABAAABAiAAIQAgABAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\NoelSkumGame.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Object">
-    <Position X="6.25" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACCAABAAgAAgAAABAIAAACCgAAAAAAAAAAAEAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\Object.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Panel">
-    <Position X="6.75" Y="7" Width="1.5" />
+    <Position X="3" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAACAAAAAAAIAgAAAAAIgAACCAAAAEAAAABAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Construction\Panel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Container">
-    <Position X="4.75" Y="10" Width="1.5" />
+    <Position X="5.25" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIQAAAAAEAAIABAAAAABIAAAQAAAAEAAACAABCAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\Container.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Inventory" Collapsed="true">
-    <Position X="10.25" Y="2.75" Width="1.5" />
+    <Position X="13.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAACAACAAAAAAABAIAAQBAAAAAQACAABIAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InventoryObject" Collapsed="true">
-    <Position X="1.5" Y="3" Width="1.5" />
+    <Position X="10.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAEACAABAAgAACAAAAAAAAAACEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\InventoryObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InventoryPanel" Collapsed="true">
-    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Position X="9" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\InventoryObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InventoryItem" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.5" />
+    <Position X="11.25" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\InventoryObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ItemMenuMove" Collapsed="true">
-    <Position X="0.5" Y="6.5" Width="1.5" />
+    <Position X="11.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAABAAAAAQCAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\ItemMenuMove.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObjectMenu" Collapsed="true">
-    <Position X="1.5" Y="5.25" Width="1.5" />
+    <Position X="10.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAACACAAAQAAAAACAAAAAEAAAAQCAAAABAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\ObjectMenu.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObjectMenuMain" Collapsed="true">
-    <Position X="2.5" Y="6.5" Width="1.5" />
+    <Position X="9" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAABAAAAAQCAAAAAAAAQ=</HashCode>
       <FileName>Assets\Scripts\Gameplay\ObjectMenuMain.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ObjectMenuOption" Collapsed="true">
-    <Position X="2.5" Y="7.5" Width="1.5" />
+    <Position X="12" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAhAAAAAgAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\ObjectMenuOption.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Player" Collapsed="true">
-    <Position X="10.25" Y="1.75" Width="1.5" />
+    <Position X="13.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gUQAACIAmiAAAIgEwIAdAAAAAABAAAAgSACAEIJAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\Player.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Door">
-    <Position X="6.75" Y="11" Width="1.5" />
+  <Class Name="Chunck" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAgAAAAEAAIABAAAAAAAAAAAAAAAAAAAAAAACgAAA=</HashCode>
-      <FileName>Assets\Scripts\Construction\Door.cs</FileName>
+      <HashCode>AAAAAAAAACABAAAAAAAAgCAAAAAAEAAAAAAAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\Terrain\Chunck.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="HeightMapLoader" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAEAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\Terrain\HeightMapLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RandomSeed" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAEAAAAAAQAQAAAAABAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Terrain\RandomSeed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Coordinates" Collapsed="true">
+    <Position X="10.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgwAQBAAAAAQAAAIKAoAEAgAQAAiA=</HashCode>
+      <FileName>Assets\Scripts\Tools\Coordinates.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Enum Name="Side" Collapsed="true">
-    <Position X="3" Y="1" Width="1.5" />
+    <Position X="13.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAI=</HashCode>
       <FileName>Assets\Scripts\Construction\NoelSkumGame.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ObjectMenuOptionType" Collapsed="true">
-    <Position X="2.25" Y="8.75" Width="1.5" />
+    <Position X="12" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAIDQAAIAAAAAAAAAAAAAAAAEAAAAIRAAAAACAAAA=</HashCode>
       <FileName>Assets\Scripts\Gameplay\ObjectMenuOption.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="GameMode" Collapsed="true">
-    <Position X="10.25" Y="1" Width="1.5" />
+    <Position X="10.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAQAAAAABAAAAAAAACAAAAAIAAAAAAAAAgAAAAE=</HashCode>
       <FileName>Assets\Scripts\Gameplay\Player.cs</FileName>

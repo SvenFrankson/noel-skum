@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Construction\Cube.cs" />
+    <Compile Include="Assets\Scripts\Construction\Door.cs" />
     <Compile Include="Assets\Scripts\Construction\GridCell.cs" />
     <Compile Include="Assets\Scripts\Construction\Item.cs" />
     <Compile Include="Assets\Scripts\Construction\NoelSkumGame.cs" />
@@ -88,7 +89,7 @@
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
-    <None Include="TestClassDiagram.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
