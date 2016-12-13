@@ -14,8 +14,19 @@ public abstract class Object : MonoBehaviour
     }
     public string displayName;
     public Coordinates cGlobal;
+    private List<ObjectMenuOptionType> menuOptions = new List<ObjectMenuOptionType>();
+    public List<ObjectMenuOptionType> MenuOptions
+    {
+        get
+        {
+            return this.menuOptions;
+        }
+    }
 
-    public List<ObjectMenuOptionType> MenuOptions;
+    public Object()
+    {
+        this.MenuOptions.Add(ObjectMenuOptionType.PickUp);
+    }
 
     public void HighLight(Color color, float outlineWidth)
     {

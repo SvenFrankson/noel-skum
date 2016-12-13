@@ -7,6 +7,11 @@ public class Item : Object {
 
     public int rot;
 
+    public Item()
+    {
+        this.MenuOptions.Add(ObjectMenuOptionType.Move);
+    }
+
     public static Item ItemConstructor(Coordinates cGlobal, int rot, byte[] reference)
     {
         Debug.Log(ReferenceString(reference));

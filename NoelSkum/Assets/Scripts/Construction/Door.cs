@@ -40,6 +40,11 @@ public class Door : Panel
         }
     }
 
+    public Door()
+    {
+        this.MenuOptions.Add(ObjectMenuOptionType.OpenClose);
+    }
+
     public void Open()
     {
         this.C_Animator.SetTrigger("Open");

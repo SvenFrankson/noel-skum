@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class Container : Item
 {
+    public Container()
+    {
+        this.MenuOptions.Add(ObjectMenuOptionType.Container);
+    }
+
     private Animator c_animator;
     private Animator C_Animator
     {
