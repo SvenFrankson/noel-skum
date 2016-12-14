@@ -79,9 +79,9 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, new byte[] { 0, 0, 0, 0 });
+        this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, "00000000");
         Destroy(panelPreview.GetComponent<Collider>());
-        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, new byte[] { 1, 0, 0, 0 });
+        this.itemPreview = Item.ItemConstructor(Coordinates.Zero, 0, "01000000");
         Destroy(itemPreview.GetComponent<Collider>());
         this.GMode = GameMode.Normal;
     }
@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
         GMode = GameMode.Normal;
     }
 
-    public void SwitchToSetPanel(byte[] reference)
+    public void SwitchToSetPanel(string reference)
     {
         Destroy(this.panelPreview.gameObject);
         this.panelPreview = Panel.PanelConstructor(Coordinates.Zero, reference);
@@ -330,7 +330,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SwitchToSetItem(byte[] reference)
+    public void SwitchToSetItem(string reference)
     {
         Debug.Log(reference.ToString() + " : " + reference.Length);
         Destroy(this.itemPreview.gameObject);

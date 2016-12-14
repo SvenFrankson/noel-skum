@@ -3,12 +3,19 @@ using System.Collections;
 
 public abstract class InventoryObject {
 
-    protected byte[] reference;
-    public byte[] Reference
+    protected string reference;
+    public string Reference
     {
         get
         {
             return this.reference;
+        }
+    }
+    public byte[] ReferenceByte
+    {
+        get
+        {
+            return Object.ReferenceStringToByteArray(this.Reference);
         }
     }
     private string displayName;
@@ -21,35 +28,32 @@ public abstract class InventoryObject {
     }
     public Texture2D DisplayPicture;
 
-    public InventoryObject(byte[] r)
+    public InventoryObject(string reference)
     {
-        GameObject prefab;
-        if (r[0] == 0)
+        GameObject prefab = Loader.Get(reference);
+        if (Object.ReferenceStringToFirstByte(reference) == 0)
         {
-            prefab = Resources.Load<GameObject>("Prefabs/panel_" + Panel.ReferenceString(r));
             Panel p = prefab.GetComponent<Panel>();
-            this.displayName = p.displayName;
-            this.DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/panel_" + Panel.ReferenceString(r) + "_inventory");
+            this.displayName = p.DisplayName;
         }
-        else if (r[0] == 1)
+        else if (Object.ReferenceStringToFirstByte(reference) == 1)
         {
-            prefab = Resources.Load<GameObject>("Prefabs/item_" + Item.ReferenceString(r));
             Item item = prefab.GetComponent<Item>();
-            this.displayName = item.displayName;
-            this.DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/item_" + Item.ReferenceString(r) + "_inventory");
+            this.displayName = item.DisplayName;
         }
-        this.reference = r;
+        this.DisplayPicture = Resources.Load<Texture2D>("Textures/Inventory/" + reference + "_inventory");
+        this.reference = reference;
     }
 
-    public static InventoryObject CreateFromRef(byte[] r)
+    public static InventoryObject CreateFromRef(string reference)
     {
-        if (r[0] == 0)
+        if (Object.ReferenceStringToFirstByte(reference) == 0)
         {
-            return new InventoryPanel(r);
+            return new InventoryPanel(reference);
         }
-        else if (r[0] == 1)
+        else if (Object.ReferenceStringToFirstByte(reference) == 1)
         {
-            return new InventoryItem(r);
+            return new InventoryItem(reference);
         }
         return null;
     }
@@ -76,7 +80,7 @@ public abstract class InventoryObject {
 
 public class InventoryPanel : InventoryObject
 {
-    public InventoryPanel(byte[] reference)
+    public InventoryPanel(string reference)
         : base(reference)
     {
 
@@ -85,7 +89,7 @@ public class InventoryPanel : InventoryObject
 
 public class InventoryItem : InventoryObject
 {
-    public InventoryItem(byte[] reference)
+    public InventoryItem(string reference)
         : base(reference)
     {
 

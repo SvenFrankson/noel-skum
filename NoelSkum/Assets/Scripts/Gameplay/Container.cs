@@ -101,12 +101,12 @@ public class Container : Item
         save.Add(4);
         save.AddRange(this.cGlobal.ToByte());
         save.Add((byte)this.rot);
-        save.AddRange(this.reference);
+        save.AddRange(this.ReferenceByte);
         save.Add((byte)this.Objects.Count);
         foreach (InventoryObject o in this.Objects)
         {
             Debug.Log("Saving content into Container");
-            save.AddRange(o.Reference);
+            save.AddRange(o.ReferenceByte);
         }
         return save.ToArray();
     }

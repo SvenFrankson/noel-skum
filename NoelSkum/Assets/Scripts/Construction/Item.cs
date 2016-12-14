@@ -7,20 +7,26 @@ public class Item : Object {
 
     public int rot;
 
+    public override string Reference
+    {
+        get
+        {
+            return "01" + this.SetUpReference;
+        }
+    }
+
     public Item()
     {
         this.MenuOptions.Add(ObjectMenuOptionType.Move);
     }
 
-    public static Item ItemConstructor(Coordinates cGlobal, int rot, byte[] reference)
+    public static Item ItemConstructor(Coordinates cGlobal, int rot, string reference)
     {
-        Debug.Log(ReferenceString(reference));
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/item_" + ReferenceString(reference));
+        GameObject prefab = Loader.Get(reference);
         GameObject instance = Instantiate(prefab);
         Item item = instance.GetComponent<Item>();
 
         item.cGlobal = cGlobal;
-        item.reference = reference;
         item.rot = rot;
 
         item.transform.position = item.Position();
@@ -95,18 +101,13 @@ public class Item : Object {
         return this.cGlobal.Position / 2f + 0.25f * Vector3.one;
     }
 
-    public override string ReferenceString()
-    {
-        return ReferenceString(this.Reference);
-    }
-
     public override byte[] GetSave()
     {
         List<byte> save = new List<byte>();
         save.Add(3);
         save.AddRange(this.cGlobal.ToByte());
         save.Add((byte)this.rot);
-        save.AddRange(this.reference);
+        save.AddRange(this.ReferenceByte);
 
         return save.ToArray();
     }

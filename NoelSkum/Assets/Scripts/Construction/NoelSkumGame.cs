@@ -66,7 +66,7 @@ public class NoelSkumGame : MonoBehaviour {
         return this.gridcells[c];
     }
 
-    public void AddPanel(Coordinates cGlobal, byte[] reference) 
+    public void AddPanel(Coordinates cGlobal, string reference) 
     {
         Coordinates cLocal = cGlobal.ToLocal;
         GridCell[][][] gridCell = GetGridCells(cGlobal);
@@ -77,7 +77,7 @@ public class NoelSkumGame : MonoBehaviour {
         }
     }
 
-    public Item AddItem(Coordinates cGlobal, int rot, byte[] reference)
+    public Item AddItem(Coordinates cGlobal, int rot, string reference)
     {
         Item item = Item.ItemConstructor(cGlobal, rot, reference);
         this.items.Add(item);
@@ -170,25 +170,25 @@ public class NoelSkumGame : MonoBehaviour {
             if (b == 2)
             {
                 byte[] reference = dataStream.ReadBytes(4);
-                this.AddPanel(cGlobal, reference);
+                this.AddPanel(cGlobal, Object.ReferenceByteArrayToString(reference));
             }
             else if (b == 3)
             {
                 int rot = dataStream.ReadByte();
                 byte[] reference = dataStream.ReadBytes(4);
-                this.AddItem(cGlobal, rot, reference);
+                this.AddItem(cGlobal, rot, Object.ReferenceByteArrayToString(reference));
             }
             else if (b == 4)
             {
                 int rot = dataStream.ReadByte();
                 byte[] reference = dataStream.ReadBytes(4);
-                Container container = this.AddItem(cGlobal, rot, reference) as Container;
+                Container container = this.AddItem(cGlobal, rot, Object.ReferenceByteArrayToString(reference)) as Container;
                 int contentCount = dataStream.ReadByte();
                 for (int i = 0; i < contentCount; i++)
                 {
                     Debug.Log("Loading content into Container");
                     reference = dataStream.ReadBytes(4);
-                    container.Add(InventoryObject.CreateFromRef(reference));
+                    container.Add(InventoryObject.CreateFromRef(Object.ReferenceByteArrayToString(reference)));
                 }
             }
             try

@@ -7,6 +7,14 @@ public class Panel : GridCell
     public bool Foundation;
     public bool Door;
 
+    public override string Reference
+    {
+        get 
+        {
+            return "00" + this.SetUpReference;
+        }
+    }
+
     public Quaternion Rotation
     {
         get
@@ -30,24 +38,18 @@ public class Panel : GridCell
         }
     }
 
-    public static Panel PanelConstructor(Coordinates cGlobal, byte[] reference)
+    public static Panel PanelConstructor(Coordinates cGlobal, string reference)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/panel_" + ReferenceString(reference));
+        GameObject prefab = Loader.Get(reference);
         GameObject instance = Instantiate<GameObject>(prefab);
         Panel p = instance.GetComponent<Panel>();
 
-        p.reference = reference;
         p.cGlobal = cGlobal;
 
         p.transform.position = p.Position();
         p.transform.rotation = p.Rotation;
 
         return p;
-    }
-
-    public override string ReferenceString()
-    {
-        return ReferenceString(this.Reference);
     }
 
     public override int UpdatePos(Coordinates cGlobal, int rot = 0)
@@ -74,7 +76,7 @@ public class Panel : GridCell
         List<byte> save = new List<byte>();
         save.Add(2);
         save.AddRange(this.cGlobal.ToByte());
-        save.AddRange(this.reference);
+        save.AddRange(this.ReferenceByte);
 
         return save.ToArray();
     }

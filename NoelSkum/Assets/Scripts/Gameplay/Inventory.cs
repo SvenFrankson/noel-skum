@@ -46,17 +46,16 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         this.objects = new List<InventoryObject>();
-        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 0 }));
-        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 1 }));
-        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 2 }));
-        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 3 }));
-        this.objects.Add(new InventoryPanel(new byte[] { 0, 0, 0, 4 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 0 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 1 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 2 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 3 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 4 }));
-        this.objects.Add(new InventoryItem(new byte[] { 1, 0, 0, 5 }));
+        this.objects.Add(new InventoryPanel("00000000"));
+        this.objects.Add(new InventoryPanel("00000001"));
+        this.objects.Add(new InventoryPanel("00000002"));
+        this.objects.Add(new InventoryPanel("00000003"));
+        this.objects.Add(new InventoryPanel("00000004"));
+        this.objects.Add(new InventoryItem("01000000"));
+        this.objects.Add(new InventoryItem("01000001"));
+        this.objects.Add(new InventoryItem("01000002"));
+        this.objects.Add(new InventoryItem("01000003"));
+        this.objects.Add(new InventoryItem("01000004"));
     }
 
     public void Add(InventoryObject target)
@@ -78,7 +77,7 @@ public class Inventory : MonoBehaviour
         {
             if (t.GetType() == typeof(InventoryPanel))
             {
-                if (Object.ReferenceString(t.Reference) == Object.ReferenceString(panel.Reference))
+                if (t.Reference == panel.Reference)
                 {
                     return (InventoryPanel)t;
                 }

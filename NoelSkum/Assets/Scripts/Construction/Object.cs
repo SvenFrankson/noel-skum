@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System;
 
 public abstract class Object : MonoBehaviour
 {
-    protected byte[] reference;
-    public byte[] Reference
+    public string SetUpReference;
+    public abstract string Reference
+    {
+        get;
+    }
+    public byte[] ReferenceByte
     {
         get
         {
-            return this.reference;
+            return ReferenceStringToByteArray(this.Reference);
         }
     }
-    public string displayName;
+    public string DisplayName;
     public Coordinates cGlobal;
     private List<ObjectMenuOptionType> menuOptions = new List<ObjectMenuOptionType>();
     public List<ObjectMenuOptionType> MenuOptions
@@ -53,17 +59,28 @@ public abstract class Object : MonoBehaviour
     }
 
     public abstract Vector3 Position();
-    public abstract string ReferenceString();
     public abstract int UpdatePos(Coordinates cGlobal, int rot = 0);
     public abstract byte[] GetSave();
 
-    public static string ReferenceString(byte[] reference)
+    static public byte ReferenceStringToFirstByte(string reference)
     {
-        string referenceString = "";
-        foreach (byte b in reference)
+        string refPart = reference.Substring(0, 2);
+        return byte.Parse(refPart, System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+    }
+
+    static public byte[] ReferenceStringToByteArray(string reference)
+    {
+        byte[] referenceByte = new byte[reference.Length / 2];
+        for (int i = 0; i < referenceByte.Length; i++)
         {
-            referenceString += b.ToString();
+            string refPart = reference.Substring(2 * i, 2);
+            referenceByte[i] = byte.Parse(refPart, System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture);
         }
-        return referenceString;
+        return referenceByte;
+    }
+
+    static public string ReferenceByteArrayToString(byte[] reference)
+    {
+        return BitConverter.ToString(reference).Replace("-", "");
     }
 }

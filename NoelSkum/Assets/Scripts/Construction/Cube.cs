@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 public class Cube : GridCell
 {
-    public override Vector3 Position()
+    public override string Reference
     {
-        throw new System.NotImplementedException();
+        get 
+        { 
+            throw new System.NotImplementedException(); 
+        }
     }
 
-    public override string ReferenceString()
+    public override Vector3 Position()
     {
         throw new System.NotImplementedException();
     }
